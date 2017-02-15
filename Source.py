@@ -11,3 +11,23 @@ Black(0,0,0)
 
 screen.fill(Black)
 pygame.display.update()
+
+Main = True
+Game = False
+Controls = False
+loser = False
+Choose = True
+
+while Main:
+	moveClock = pygame.time.Clock()
+	move_tick_count = 0
+	moveClock2 = pygame.time.Clock()
+	move_tick_count2 = 0
+	moveClock3 = pygame.time.Clock()
+	move_tick_count3 = 0
+	moveClock4 = pygame.time.Clock()
+	move_tick_count4 = 0
+	moveClock5 = pygame.time.Clock()
+	move_tick_count5 = 0
+	
+
