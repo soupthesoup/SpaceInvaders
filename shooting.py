@@ -23,7 +23,7 @@ def shoot():
 
   #Check Surface name!!!
   #Position +Animated ship position to be above it and in the middle
-  if position.y <= 800 && screen.get_at(position.x, position.y + 1) == (BLACK): #Change white to background colour
+  if position.y <= 800 and screen.get_at(position.x, position.y + 1) == (BLACK): #Change white to background colour
     pygame.draw.rect(screen, WHITE, (position, 5, 10), 0)
     position.y += dy
     pygame.display.update()
