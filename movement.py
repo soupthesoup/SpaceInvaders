@@ -6,7 +6,7 @@ import pygame
 
 
 # movement for aliens function
-# def movment(
+def alien_movment(
 
 
 
@@ -27,4 +27,10 @@ def player_move(dsx, dx, dy):
         if event.type == pygame.KEYUP:
             if event.key == pygame.K_LEFT or event.key == pygame.K_RIGHT:
                 dsx = 0
-        
+    return dsx
+    
+screen.fill(Black)
+oldx = shipRect.left
+shipRect.left += dsx
+#if shipRect.collide point(Screen size min + 10, screen size + ship height) or shipRect.collidepoint(Screen size max - 10, screen size + ship height):
+    shipRect.left = oldx
