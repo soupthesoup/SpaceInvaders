@@ -11,6 +11,30 @@ for alien in alienArray:
     #bullet collision here
     if move_tick_count >= 2000:
         move_tick_count = 0
+		for alien in alien_array():
+			alien.left += dax
+			if (alien.right > 950 and right == True):
+				for alien5 in alien_array5():
+					alien5.bottom += 10
+				for alien4 in alien_array4():
+					alien4.bottom += 10
+				for alien3 in alien_array3():
+					alien3.bottom += 10
+				for alien2 in alien_array2():
+					alien2.bottom += 10
+				for alien in alien_array():
+					alien.bottom += 10
+					
+		for alien2 in alien_array2():
+			alien2.left += dax
+		for alien3 in alien_array3():
+			alien3.left += dax
+		for alien4 in alien_array4():
+			alien4.left += dax
+		for alien5 in alien_array5():
+			alien5.left += dax
+		
+		
         
     
 
