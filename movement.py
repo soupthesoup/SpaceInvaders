@@ -3,8 +3,6 @@
 #                       Group poject                      #
 ###########################################################
 import pygame
-
-
 # movement for aliens function
 for alien1 in alienRow1:
     pygame.draw.rect(screen,White,alien1,0)
@@ -14,6 +12,7 @@ for alien1 in alienRow1:
 	    bulletArray.remove(bullet)
 	    alienRow1.remove(alien1)
     if move_tick_count >= 1000:
+	count += 1
 	move_tick_count = 0
 	for alien1 in alienRow1:
 	    alien1.left += dax
