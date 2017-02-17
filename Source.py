@@ -9,6 +9,13 @@ White(255,255,255)
 Green(0,255,0)
 Black(0,0,0)
 
+al1 = pygame.image.load('Alien1.jpg')
+al15 = pygame.image.load('Alien1.5.jpg')
+al2 = pygame.image.load('Alien2.jpg')
+al25 = pygame.image.load('alien2.5.jpg')
+al3 = pygame.image.load('alien3.jpg')
+al35 = pygame.image.load('alien3.5.jpg')
+
 screen.fill(Black)
 pygame.display.update()
 
