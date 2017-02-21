@@ -11,9 +11,9 @@ def shoot():
     bulletYspeed = -3
     bulletCollection = []
     #tank being the tank sprite.
-    bulPosition = tank.get_rect()
-    bulPosition.x = tank.get_rect().centerx
-    bulPosition.y = tank.get_rect().centery - 10
+    bulPosition = shipRect.get_rect()
+    bulPosition.x = shipRect.get_rect().centerx
+    bulPosition.y = shipRect.get_rect().centery - 10
 
 
     #done = False
@@ -31,15 +31,15 @@ def shoot():
 
 
 
-    pygame.draw.rect(screen, WHITE, bulPosition, 0)
-    bulPosition.y += bulletYspeed
-    pygame.display.update()
     done = False
     while not done:
         for event in pygame.event.get():
           if event.type == pygame.MOUSEBUTTONDOWN and event.button == 1 or event.type == pygame.KEYDOWN and event.key == pygame.K_SPACE:
             bulletCollection.append(bullet)
-        for bullet in bulletCollection:
+        for bullet in bulletCollection:          
+            bulPosition.y += bulletYspeed
+            pygame.draw.rect(screen, WHITE, bulPosition, 0)
+            pygame.display.update()
             if bullet.top < 0: #checks clide with top of level
                 bulletCollection.remove(bullet)
                 pygame.display.update()
