@@ -13,10 +13,10 @@ AL3b = pygame.image.load("Alien3b.png")
 # movement for aliens function
 for alien1 in alienRow1:
     pygame.draw.rect(screen,White,alien1,0)
-    for bullet in bulletArray:
+    for bullet in bulletCollection:
 	if bullet.colliderect(alien1):
 	    score += 100
-	    bulletArray.remove(bullet)
+	    bulletCollection.remove(bullet)
 	    alienRow1.remove(alien1)
     if move_tick_count >= 1000:
 	count += 1
@@ -97,10 +97,10 @@ for alien2 in alienRow2:
 
 for alien3 in alienRow3:
     pygame.draw.rect(screen,White,alien3,0)
-    for bullet in bulletArray:
+    for bullet in bulletCollection:
 	if bullet.colliderect(alien3):
 	    score += 40
-	    bulletArray.remove(bullet)
+	    bulletCollection.remove(bullet)
 	    alienRow3.remove(alien3)
     if move_tick_count3 >= 1000:
 	move_tick_count3 = 0
@@ -136,10 +136,10 @@ for alien3 in alienRow3:
 
 for alien4 in alienRow4:
     pygame.draw.rect(screen,White,alien4,0)
-    for bullet in bulletArray:
+    for bullet in bulletCollection:
 	if bullet.colliderect(alien4):
 	    score += 20
-	    bulletArray.remove(bullet)
+	    bulletCollection.remove(bullet)
 	    alienRow4.remove(alien4)
     if move_tick_count4 >= 1000:
 	move_tick_count4 = 0
@@ -176,10 +176,10 @@ for alien4 in alienRow4:
 
 for alien5 in alienRow5:
     pygame.draw.rect(screen,White,alien5,0)
-    for bullet in bulletArray:
+    for bullet in bulletCollection:
 	if bullet.colliderect(alien5):
 	    score += 20
-	    bulletArray.remove(bullet)
+	    bulletCollection.remove(bullet)
 	    alienRow5.remove(alien5)
     if move_tick_count5 >= 1000:
 	move_tick_count5 = 0
@@ -234,6 +234,8 @@ for event in pygame.event.get():
         if event.key == pygame.K_LEFT or event.key == pygame.K_RIGHT:
             dsx = 0
 
+	
+	
     
 screen.fill(Black)
 oldx = shipRect.left
