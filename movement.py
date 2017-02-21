@@ -3,6 +3,13 @@
 #                       Group poject                      #
 ###########################################################
 import pygame
+AL1a = pygame.image.load("Alien1a.png")
+AL1b = pygame.image.load("Alien1b.png")
+AL2a = pygame.image.load("Alien2a.png")
+AL2b = pygame.image.load("Alien2b.png")
+AL3a = pygame.image.load("Alien3a.png")
+AL3b = pygame.image.load("Alien3b.png")
+
 # movement for aliens function
 for alien1 in alienRow1:
     pygame.draw.rect(screen,White,alien1,0)
@@ -45,9 +52,6 @@ for alien1 in alienRow1:
 	for alien1 in alienRow1:
 	    alien1.bottom += 10
 	    alien1.left += 2*dax
-
-
-
 
 for alien2 in alienRow2:
     pygame.draw.rect(screen,White,alien2,0)
