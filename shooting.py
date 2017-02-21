@@ -12,10 +12,12 @@ def shoot():
   BLACK = (0, 0, 0)
   GREEN = (0, 204, 0) #Alien colour placeholder
   bulletYspeed = -3
+  bulletCollection = []
   #tank being the tank sprite.
   bulPosition = tank.get_rect()
-  bulPosition.centerx = tank.get_rect().centerx
-  bulPosition.centery = tank.get_rect().centery - 10
+  bulPosition.x = tank.get_rect().centerx
+  bulPosition.y = tank.get_rect().centery - 10
+  
   
   #done = False
   #while not done:
@@ -24,8 +26,11 @@ def shoot():
   #      if event.key == pygame.K_UP or event.key == pygame.K_SPACE:
   #Check Surface name!!!
   #bulPosition +Animated ship bulPosition to be above it and in the middle
-  hit = False
-  while not hit:
+  done = False
+  while not done:
+    for event in pygame.event.get():
+      if event.type == pygame.MOUSEBUTTONDOWN and event.button == 1 or event.type == pygame.KEYDOWN == K_SPACE:
+        bulletCollection.append(bullet)
     if bulPosition.y > 0: #Change white to background colour
       pygame.draw.rect(screen, WHITE, (bulPosition, 5, 10), 0)
       bulPosition.top += dy
