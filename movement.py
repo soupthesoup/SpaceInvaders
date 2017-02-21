@@ -55,10 +55,10 @@ for alien1 in alienRow1:
 
 for alien2 in alienRow2:
     pygame.draw.rect(screen,White,alien2,0)
-    for bullet in bulletArray:
+    for bullet in bulletCollection:
 	if bullet.colliderect(alien2):
 	    score += 40
-	    bulletArray.remove(bullet)
+	    bulletCollection.remove(bullet)
 	    alienRow2.remove(alien2)
     if move_tick_count2 >= 1000:
 	move_tick_count2 = 0
