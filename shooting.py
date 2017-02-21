@@ -40,7 +40,7 @@ def shoot():
           if event.type == pygame.MOUSEBUTTONDOWN and event.button == 1 or event.type == pygame.KEYDOWN and event.key == pygame.K_SPACE:
             bulletCollection.append(bullet)
         for bullet in bulletCollection:
-            if bullet.top < 0:
+            if bullet.top < 0: #checks clide with top of level
                 bulletCollection.remove(bullet)
                 pygame.display.update()
             for alien1 in alienArray1:
