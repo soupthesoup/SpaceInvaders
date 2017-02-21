@@ -62,17 +62,14 @@ while game:
 
     screen.fill(BLACK)
 
-    for WALL1 in barrier1:
-        pygame.draw.rect(screen,GREEN,WALL1,0)
-
-    for WALL2 in barrier2:
-        pygame.draw.rect(screen,GREEN,WALL2,0)
-
-    for WALL3 in barrier3:
-        pygame.draw.rect(screen,GREEN,WALL3,0)
-
-    for WALL4 in barrier4:
-        pygame.draw.rect(screen,GREEN,WALL4,0)
+    for wallR1 in barrier1:
+        pygame.draw.rect(screen,GREEN,wallR1,0)
+    for wallR2 in barrier2:
+        pygame.draw.rect(screen,GREEN,wallR2,0)
+    for wallR3 in barrier3:
+        pygame.draw.rect(screen,GREEN,wallR3,0)
+    for wallR4 in barrier4:
+        pygame.draw.rect(screen,GREEN,wallR4,0)
 
     pygame.display.update()
     
