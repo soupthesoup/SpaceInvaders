@@ -99,10 +99,8 @@ def shoot():
         
         for alien1 in alienArray1:#checks each row of aliens to see if the bullet collides with it.
             alienBullPos.x = alien1.get_rect().centerx
-
-
-#FINISH
-            
+            alienBullPos.y = alien1.get_rect().centery
+#FINISH          
             pygame.display.update()
                 
         for alien2 in alienArray2:
