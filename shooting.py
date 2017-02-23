@@ -12,6 +12,7 @@ def shoot():
     arrayCount = 0      #used for a loop to make randomized numbers
     bulletYspeed = -3   #bullet speed moving up
     bulletCollection = []
+    
     alienBulletArray = []
     alienBulletTimer = []   #Random numbers as a timer for aliens
     while i < 8:
@@ -37,6 +38,42 @@ def shoot():
             #pygame.draw.rect(screen, WHITE, bulPosition, 0)
             bulletCollection.append(bulPosition)
             #pygame.display.update()
+        for wall1 in barrier1:
+            for bullet in bulletCollection:
+                if bullet.colliderect(wall1):
+                    bulletCollection.remove(bullet)
+                    barrier1.remove(wall1)
+            for alienBullet in alienBulletArray:
+                if alienBullet.colliderect(wall1):
+                    alienBulletArray.remove(alienBullet)
+                    barrier1.remove(wall1)
+        for wall2 in barrier2:
+            for bullet in bulletCollection:
+                if bullet.colliderect(wall2):
+                    bulletCollection.remove(bullet)
+                    barrier2.remove(wall2)
+            for alienBullet in alienBulletArray:
+                if alienBullet.colliderect(wall2):
+                    alienBulletArray.remove(alienBullet)
+                    barrier2.remove(wall2)
+        for wall3 in barrier3:
+            for bullet in bulletCollection:
+                if bullet.colliderect(wall3):
+                    bulletCollection.remove(bullet)
+                    barrier3.remove(wall3)
+            for alienBullet in alienBulletArray:
+                if alienBullet.colliderect(wall3):
+                    alienBulletArray.remove(alienBullet)
+                    barrier3.remove(wall3)
+        for wall4 in barrier4:
+            for bullet in bulletCollection:
+                if bullet.colliderect(wall4):
+                    bulletCollection.remove(bullet)
+                    barrier4.remove(wall4)
+            for alienBullet in alienBulletArray:
+                if alienBullet.colliderect(wall4):
+                    alienBulletArray.remove(alienBullet)
+                    barrier4.remove(wall4)
         for bullet in bulletCollection:
             if bullet.top > 0: #if bullet is not at the top of the screen
                 pygame.draw.rect(screen, WHITE, bullet, 0)
