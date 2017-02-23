@@ -26,15 +26,22 @@ x2 = 350
 x3 = 550
 x4 = 750
 y = 650
+alienPosx = 150
+
 barrier1 = []
 barrier2 = []
 barrier3 = []
 barrier4 = []
+alienRow1 = []
+alienRow2 = []
+alienRow3 = []
+alienRow4 = []
+alienRow5 = []
 
 Main = True
 Game = False
 Controls = False
-loser = False
+Loser = False
 Choose = True
 
 screen.fill(BLACK)
@@ -48,6 +55,7 @@ barrier = [
         "WWWWWWWWWWWWWWWWWWWW",
         "WWWWW          WWWWW",
         ]
+aliens = ["AAAAAAAAAAAA"]
 
 for row in barrier:
     for col in row:
@@ -70,6 +78,10 @@ for row in barrier:
     x3 = 550
     x4 = 750
 
+for row in aliens:
+    for col in row:
+        if col == "a":
+            
 
 while Main:
     moveClock = pygame.time.Clock()
