@@ -10,9 +10,10 @@ def shoot():
     GREEN = (0, 204, 0) #Barrier colour placeholder
     score = 0
     arrayCount = 0      #used for a loop to make randomized numbers
-    bulletYspeed = -3   #bullet speed moving up
+    bulletYspeed = -5   #bullet speed moving up
+    alienBulletdy = 5   #alien bullet speed moving down
     bulletCollection = []
-    
+    shootTimer = 0
     alienBulletArray = []
     alienBulletTimer = []   #Random numbers as a timer for aliens
     while i < 8:
@@ -31,13 +32,13 @@ def shoot():
     done = False
     while not done:
         for event in pygame.event.get():
-          if event.type == pygame.MOUSEBUTTONDOWN and event.button == 1 or event.type == pygame.KEYDOWN and event.key == pygame.K_SPACE:
-            bulPosition.x = shipRect.get_rect().centerx
-            bulPosition.y = shipRect.get_rect().centery - 10
-            #bulPosition.y += bulletYspeed
-            #pygame.draw.rect(screen, WHITE, bulPosition, 0)
-            bulletCollection.append(bulPosition)
-            #pygame.display.update()
+            if event.type == pygame.MOUSEBUTTONDOWN and event.button == 1 or event.type == pygame.KEYDOWN and event.key == pygame.K_SPACE:
+                bulPosition.x = shipRect.get_rect().centerx
+                bulPosition.y = shipRect.get_rect().centery - 10
+                #bulPosition.y += bulletYspeed
+                #pygame.draw.rect(screen, WHITE, bulPosition, 0)
+                bulletCollection.append(bulPosition)
+                #pygame.display.update()
         for wall1 in barrier1:
             for bullet in bulletCollection:
                 if bullet.colliderect(wall1):
@@ -112,50 +113,37 @@ def shoot():
                     alienArray5.remove(alien5)
                     pygame.display.update()
                     score += 30
-            for wallR1 in barrier1: #Checks collision with each barrier block
-                if bullet.colliderect(wallR1):
-                    bulletCollection.remove(bullet)#if it does, delete bullet and the barriers block
-                    barrier1.remove(wallR1)
-                    pygame.display.update()
-            for wallR2 in barrier2:
-                if bullet.colliderect(wallR2):
-                    bulletCollection.remove(bullet)
-                    barrier2.remove(wallR2)
-                    pygame.display.update()
-            for wallR3 in barrier3:
-                if bullet.colliderect(wallR3):
-                    bulletCollection.remove(bullet)
-                    barrier3.remove(wallR3)
-                    pygame.display.update()
-            for wallR4 in barrier4:
-                if bullet.colliderect(wallR4):
-                    bulletCollection.remove(bullet)
-                    barrier4.remove(wallR4)
-                    pygame.display.update()
         #alien shooting from here on out.
         
         for alien1 in alienArray1:#checks each row of aliens to see if the bullet collides with it.
-            alienBullPos.x = alien1.get_rect().centerx
-            alienBullPos.y = alien1.get_rect().centery
+            alienNum = alienArray.index(alien1)
+            timer += 1
+            if alienBulletTimer[alienNum] == timer:
+                alienBullPos.x = alien1.get_rect().centerx
+                alienBullPos.y = alien1.get_rect().centery
+                alienBulletArray.append(alienBullPos)
+            if timer >= 10:
+                timer = 0
+#what I want to do: Get the value(index) of the alien.(position) if that alien's timer is reached, shoot. The timer is the randint at
+#the start of the program in an array. Use the alien index to referance that array's number.
+                   
 #FINISH          
-            pygame.display.update()
-                
+            #pygame.display.update()        
         for alien2 in alienArray2:
             
-            pygame.display.update()
-                
+            #pygame.display.update()   
         for alien3 in alienArray3:
             
-            pygame.display.update()
-                
+            #pygame.display.update()      
         for alien4 in alienArray4:
             
-            pygame.display.update()
-                
+            pygame.display.update()  
         for alien5 in alienArray5:
             
-            pygame.display.update()
-                
-                
+            pygame.display.update()   
+        for alienBullet in alienBulletArray:
+            alienBullet.top += alienBulletdy
+            
+            
 shoot()
 
