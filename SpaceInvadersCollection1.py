@@ -14,12 +14,18 @@ RED = (255,51,51)
 GREEN = (0,255,0)
 BLUE = (0,0,255)
 
-AL1a = pygame.image.load("Alien1a.png")
+AL1a = pygame.image.load("Alien1a.png") #loading each alien photo
 AL1b = pygame.image.load("Alien1b.png")
 AL2a = pygame.image.load("Alien2a.png")
 AL2b = pygame.image.load("Alien2b.png")
 AL3a = pygame.image.load("Alien3a.png")
 AL3b = pygame.image.load("Alien3b.png")
+Ax = 115 #alien x position
+Ay = 150 #alien y position for row 1
+Ay2 = 200#row 2
+Ay3 = 250#row 3
+Ay4 = 300#row 4
+Ay5 = 350#row 5
 
 x1 = 150
 x2 = 350
@@ -73,15 +79,35 @@ for row in barrier:
         x3 += 5
         x4 += 5
     y += 10
-    x1 = 150
+    x1 = 150  #barrier positions x for the first barrier
     x2 = 350
     x3 = 550
     x4 = 750
 
 for row in aliens:
     for col in row:
-        if col == "a":
-            
+        if col == "A":
+            # variables for the sprite
+            ##                alien1_image = pygame.image.load("Alien1.png")
+            ##                alien2_image = pygame.image.load("Alien2.png")
+            ##                alien3_image = pygame.image.load("Alien3.png")
+                    alien1Rect = pygame.Rect(Ax,tAy,30,30)
+            ##                screen.blit(alien1_image(alien1Rect))
+                    alienRow1.append(alien1Rect)
+                    alien2Rect = pygame.Rect(Ax,Ay2,30,30)
+                    alienRow2.append(alien2Rect)
+            ##                screen.blit(alien2_image(alien2Rect))
+                    alien3Rect = pygame.Rect(Ax,Ay3,30,30)
+            ##                screen.blit(alien2_image(alien3Rect))
+                    alienRow3.append(alien3Rect)
+                    alien4Rect = pygame.Rect(Ax,Ay4,30,30)
+            ##                screen.blit(alien3_image(alien4Rect))
+                    alienRow4.append(alien4Rect)
+                    alien5Rect = pygame.Rect(Ax,Ay5,30,30)
+            ##                screen.blit(alien3_image(alien5Rect))
+                    alienRow5.append(alien5Rect)
+        Ax += 75
+    Ax = 115
 
 while Main:
     moveClock = pygame.time.Clock()
