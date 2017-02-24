@@ -33,6 +33,19 @@ x3 = 550
 x4 = 750
 y = 650
 alienPosx = 150
+dsx = 0
+dax = 10
+day = 5
+oldx = 0
+shipx = 450 #Ship position
+shipy = 725
+shiph = 35#Ship dimentions
+shipw = 75
+
+score = 0
+arrayCount = 0      #used for a loop to make randomized numbers
+bulletYspeed = -5   #bullet speed moving up
+alienBulletdy = 5   #alien bullet speed moving down
 
 barrier1 = []
 barrier2 = []
@@ -43,7 +56,13 @@ alienRow2 = []
 alienRow3 = []
 alienRow4 = []
 alienRow5 = []
+bulletCollection = []
+alienBulletArray = []
+alienBulletTimer = []   #Random numbers as a timer for aliens
 
+shipRect = pygame.Rect(shipx,shipy,shipw,shiph)
+
+right = True
 Main = True
 Game = False
 Controls = False
@@ -54,6 +73,12 @@ screen.fill(BLACK)
 pygame.display.update()
 
 game = True
+i = 0
+while i < 8:
+    shootTime = randint(2, 8)   #randint(minValue, maxValue)
+    alienBulletTimer.append(shootTime)
+    #print alienBulletTimer[i]  #testing if number randomized works
+    i += 1 
 
 barrier = [
         "WWWWWWWWWWWWWWWWWWWW",
@@ -91,7 +116,7 @@ for row in aliens:
             ##                alien1_image = pygame.image.load("Alien1.png")
             ##                alien2_image = pygame.image.load("Alien2.png")
             ##                alien3_image = pygame.image.load("Alien3.png")
-                    alien1Rect = pygame.Rect(Ax,tAy,30,30)
+                    alien1Rect = pygame.Rect(Ax,Ay,30,30)
             ##                screen.blit(alien1_image(alien1Rect))
                     alienRow1.append(alien1Rect)
                     alien2Rect = pygame.Rect(Ax,Ay2,30,30)
@@ -110,19 +135,49 @@ for row in aliens:
     Ax = 115
 
 while Main:
-    moveClock = pygame.time.Clock()
+    length = len(bulletCollection)
+    for event in pygame.event.get():
+        if event.type == pygame.QUIT:
+            game = False
+            choose = True
+        if event.type == pygame.KEYDOWN:
+            if event.key == pygame.K_q:
+                game = False
+                choose = True
+            elif event.key == pygame.K_RIGHT:
+                dsx = 5
+            elif event.key == pygame.K_LEFT:
+                dsx = -5
+            elif event.key == pygame.K_UP and (shipBulletTickCount >= 500) or length <= 0:
+                shipBulletTickCount = 0
+                bulletCollection.append(bulletRect)
+        if event.type == pygame.KEYUP:
+            if event.key == pygame.K_LEFT or event.key == pygame.K_RIGHT:
+                dsx = 0
+
+    shipBulletx = shipRect.centerx
+    shipBullety = shipRect.centery + 5
+    bulletRect = pygame.Rect(shipBulletx,shipBullety,5,10)
+    oldx = shipRect.left
+    shipRect.left += dsx
+    if shipRect.collidepoint(10,725) or shipRect.collidepoint(990,725):
+        shipRect.left = oldx
+    
+    moveclock = pygame.time.Clock()
     move_tick_count = 0
-    moveClock2 = pygame.time.Clock()
+    moveclock2 = pygame.time.Clock()
     move_tick_count2 = 0
-    moveClock3 = pygame.time.Clock()
+    moveclock3 = pygame.time.Clock()
     move_tick_count3 = 0
-    moveClock4 = pygame.time.Clock()
+    moveclock4 = pygame.time.Clock()
     move_tick_count4 = 0
-    moveClock5 = pygame.time.Clock()
+    moveclock5 = pygame.time.Clock()
     move_tick_count5 = 0
-
+    shipBulletTickCount = 0
+    
     screen.fill(BLACK)
-
+    pygame.time.delay(20)
+    
     for wallR1 in barrier1:
         pygame.draw.rect(screen,GREEN,wallR1,0)
     for wallR2 in barrier2:
@@ -132,8 +187,52 @@ while Main:
     for wallR4 in barrier4:
         pygame.draw.rect(screen,GREEN,wallR4,0)
 
+    move_tick_count = move_tick_count + moveclock.tick()
+    move_tick_count2 = move_tick_count2 + moveclock2.tick()
+    move_tick_count3 = move_tick_count3 + moveclock3.tick()
+    move_tick_count4 = move_tick_count4 + moveclock4.tick()
+    move_tick_count5 = move_tick_count5 + moveclock5.tick()
+
+    for wall1 in barrier1:
+        for bullet in bulletCollection:
+            if bullet.colliderect(wall1):
+                bulletCollection.remove(bullet)
+                barrier1.remove(wall1)
+        for alienBullet in alienBulletArray:
+            if alienBullet.colliderect(wall1):
+                alienBulletArray.remove(alienBullet)
+                barrier1.remove(wall1)
+    for wall2 in barrier2:
+        for bullet in bulletCollection:
+            if bullet.colliderect(wall2):
+                bulletCollection.remove(bullet)
+                barrier2.remove(wall2)
+        for alienBullet in alienBulletArray:
+            if alienBullet.colliderect(wall2):
+                alienBulletArray.remove(alienBullet)
+                barrier2.remove(wall2)
+    for wall3 in barrier3:
+        for bullet in bulletCollection:
+            if bullet.colliderect(wall3):
+                bulletCollection.remove(bullet)
+                barrier3.remove(wall3)
+        for alienBullet in alienBulletArray:
+            if alienBullet.colliderect(wall3):
+                alienBulletArray.remove(alienBullet)
+                barrier3.remove(wall3)
+    for wall4 in barrier4:
+        for bullet in bulletCollection:
+            if bullet.colliderect(wall4):
+                bulletCollection.remove(bullet)
+                barrier4.remove(wall4)
+        for alienBullet in alienBulletArray:
+            if alienBullet.colliderect(wall4):
+                alienBulletArray.remove(alienBullet)
+                barrier4.remove(wall4)
+
     for alien1 in alienRow1:
-        pygame.draw.rect(screen,White,alien1,0)
+        screen.blit(AL1a, (alien1))
+        #pygame.draw.rect(screen,WHITE,alien1,0)
         for bullet in bulletCollection:
             if bullet.colliderect(alien1):
                 score += 100
@@ -141,41 +240,43 @@ while Main:
                 alienRow1.remove(alien1)
         if move_tick_count >= 1000:
             count += 1
-            move_tick_count = 0
+            #move_tick_count = 0
             for alien1 in alienRow1:
                 alien1.left += dax
                 print alien1.left
-        if (alien1.left < 50 and right == False):
-            right = True
-            dax = -dax
-            for alien5 in alienRow5:
-                alien5.bottom += 10
-            for alien4 in alienRow4:
-                alien4.bottom += 10
-            for alien3 in alienRow3:
-                alien3.bottom += 10
-            for alien2 in alienRow2:
-                alien2.bottom += 10
-            for alien1 in alienRow1:
-                alien1.bottom += 10
-                #alien1.right += 1/2*dax
-        elif (alien1.right > 950 and right == True):
-            right = False
-            dax = -dax
-            for alien5 in alienRow5:
-                alien5.bottom += 10
-            for alien4 in alienRow4:
-                alien4.bottom += 10
-            for alien3 in alienRow3:
-                alien3.bottom += 10
-            for alien2 in alienRow2:
-                alien2.bottom += 10
-            for alien1 in alienRow1:
-                alien1.bottom += 10
-                alien1.left += 2*dax
+                if (alien1.left < 50 and right == False):
+                    right = True
+                    dax = -dax
+                    for alien5 in alienRow5:
+                        alien5.bottom += 10
+                    for alien4 in alienRow4:
+                        alien4.bottom += 10
+                    for alien3 in alienRow3:
+                        alien3.bottom += 10
+                    for alien2 in alienRow2:
+                        alien2.bottom += 10
+                    for alien1 in alienRow1:
+                        alien1.bottom += 10
+                        alien1.right += 1/2*dax
+                elif (alien1.right > 950 and right == True):
+                    right = False
+                    dax = -dax
+                    for alien5 in alienRow5:
+                        alien5.bottom += 10
+                    for alien4 in alienRow4:
+                        alien4.bottom += 10
+                    for alien3 in alienRow3:
+                        alien3.bottom += 10
+                    for alien2 in alienRow2:
+                        alien2.bottom += 10
+                    for alien1 in alienRow1:
+                        alien1.bottom += 10
+                        alien1.left += 2*dax
+            move_tick_count = 0
 
     for alien2 in alienRow2:
-        pygame.draw.rect(screen,White,alien2,0)
+        screen.blit(AL2a, (alien2))
+        #pygame.draw.rect(screen,WHITE,alien2,0)
         for bullet in bulletCollection:
             if bullet.colliderect(alien2):
                 score += 40
@@ -185,35 +286,37 @@ while Main:
             move_tick_count2 = 0
             for alien2 in alienRow2:
                 alien2.left += dax
-        if (alien2.left < 50 and right == False):
-            right = True
-            dax = -dax
-            for alien5 in alienRow5:
-                alien5.bottom += 10
-            for alien4 in alienRow4:
-                alien4.bottom += 10
-            for alien3 in alienRow3:
-                alien3.bottom += 10
-            for alien2 in alienRow2:
-                alien2.bottom += 10
-            for alien1 in alienRow1:
-                alien1.bottom += 10
-        elif (alien2.right > 950 and right == True):
-            right = False
-            dax = -dax
-            for alien5 in alienRow5:
-                alien5.bottom += 10
-            for alien4 in alienRow4:
-                alien4.bottom += 10
-            for alien3 in alienRow3:
-                alien3.bottom += 10
-            for alien2 in alienRow2:
-                alien2.bottom += 10
-            for alien1 in alienRow1:
-                alien1.bottom += 10
+                if (alien2.left < 50 and right == False):
+                    right = True
+                    dax = -dax
+                    for alien5 in alienRow5:
+                        alien5.bottom += 10
+                    for alien4 in alienRow4:
+                        alien4.bottom += 10
+                    for alien3 in alienRow3:
+                        alien3.bottom += 10
+                    for alien2 in alienRow2:
+                        alien2.bottom += 10
+                    for alien1 in alienRow1:
+                        alien1.bottom += 10
+                elif (alien2.right > 950 and right == True):
+                    right = False
+                    dax = -dax
+                    for alien5 in alienRow5:
+                        alien5.bottom += 10
+                    for alien4 in alienRow4:
+                        alien4.bottom += 10
+                    for alien3 in alienRow3:
+                        alien3.bottom += 10
+                    for alien2 in alienRow2:
+                        alien2.bottom += 10
+                    for alien1 in alienRow1:
+                        alien1.bottom += 10
+            move_tick_count2 = 0
 
     for alien3 in alienRow3:
-        pygame.draw.rect(screen,White,alien3,0)
+        screen.blit(AL2a, (alien3))
+        #pygame.draw.rect(screen,WHITE,alien3,0)
         for bullet in bulletCollection:
             if bullet.colliderect(alien3):
                 score += 40
@@ -223,35 +326,37 @@ while Main:
             move_tick_count3 = 0
             for alien3 in alienRow3:
                 alien3.left += dax
-        if (alien3.left < 50 and right == False):
-            right = True
-            dax = -dax
-            for alien5 in alienRow5:
-                alien5.bottom += 10
-            for alien4 in alienRow4:
-                alien4.bottom += 10
-            for alien3 in alienRow3:
-                alien3.bottom += 10
-            for alien2 in alienRow2:
-                alien2.bottom += 10
-            for alien1 in alienRow1:
-                alien1.bottom += 10
-        elif (alien3.right > 950 and right == True):
-            right = False
-            dax = -dax
-            for alien5 in alienRow5:
-                alien5.bottom += 10
-            for alien4 in alienRow4:
-                alien4.bottom += 10
-            for alien3 in alienRow3:
-                alien3.bottom += 10
-            for alien2 in alienRow2:
-                alien2.bottom += 10
-            for alien1 in alienRow1:
-                alien1.bottom += 10
+                if (alien3.left < 50 and right == False):
+                    right = True
+                    dax = -dax
+                    for alien5 in alienRow5:
+                        alien5.bottom += 10
+                    for alien4 in alienRow4:
+                        alien4.bottom += 10
+                    for alien3 in alienRow3:
+                        alien3.bottom += 10
+                    for alien2 in alienRow2:
+                        alien2.bottom += 10
+                    for alien1 in alienRow1:
+                        alien1.bottom += 10
+                elif (alien3.right > 950 and right == True):
+                    right = False
+                    dax = -dax
+                    for alien5 in alienRow5:
+                        alien5.bottom += 10
+                    for alien4 in alienRow4:
+                        alien4.bottom += 10
+                    for alien3 in alienRow3:
+                        alien3.bottom += 10
+                    for alien2 in alienRow2:
+                        alien2.bottom += 10
+                    for alien1 in alienRow1:
+                        alien1.bottom += 10
+            move_tick_count3 = 0
 
     for alien4 in alienRow4:
-        pygame.draw.rect(screen,White,alien4,0)
+        screen.blit(AL3a, (alien4))
+        #pygame.draw.rect(screen,WHITE,alien4,0)
         for bullet in bulletCollection:
             if bullet.colliderect(alien4):
                 score += 20
@@ -261,35 +366,37 @@ while Main:
             move_tick_count4 = 0
             for alien4 in alienRow4:
                 alien4.left += dax
-        if (alien4.left < 50 and right == False):
-            right = True
-            dax = -dax
-            for alien5 in alienRow5:
-                alien5.bottom += 10
-            for alien4 in alienRow4:
-                alien4.bottom += 10
-            for alien3 in alienRow3:
-                alien3.bottom += 10
-            for alien2 in alienRow2:
-                alien2.bottom += 10
-            for alien1 in alienRow1:
-                alien1.bottom += 10
-        elif (alien4.right > 950 and right == True):
-            right = False
-            dax = -dax
-            for alien5 in alienRow5:
-                alien5.bottom += 10
-            for alien4 in alienRow4:
-                alien4.bottom += 10
-            for alien3 in alienRow3:
-                alien3.bottom += 10
-            for alien2 in alienRow2:
-                alien2.bottom += 10
-            for alien1 in alienRow1:
-                alien1.bottom += 10
+                if (alien4.left < 50 and right == False):
+                    right = True
+                    dax = -dax
+                    for alien5 in alienRow5:
+                        alien5.bottom += 10
+                    for alien4 in alienRow4:
+                        alien4.bottom += 10
+                    for alien3 in alienRow3:
+                        alien3.bottom += 10
+                    for alien2 in alienRow2:
+                        alien2.bottom += 10
+                    for alien1 in alienRow1:
+                        alien1.bottom += 10
+                elif (alien4.right > 950 and right == True):
+                    right = False
+                    dax = -dax
+                    for alien5 in alienRow5:
+                        alien5.bottom += 10
+                    for alien4 in alienRow4:
+                        alien4.bottom += 10
+                    for alien3 in alienRow3:
+                        alien3.bottom += 10
+                    for alien2 in alienRow2:
+                        alien2.bottom += 10
+                    for alien1 in alienRow1:
+                        alien1.bottom += 10
+            move_tick_count4 = 0
 
     for alien5 in alienRow5:
-        pygame.draw.rect(screen,White,alien5,0)
+        screen.blit(AL3a, (alien5))
+        #pygame.draw.rect(screen,WHITE,alien5,0)
         for bullet in bulletCollection:
             if bullet.colliderect(alien5):
                 score += 20
@@ -299,61 +406,44 @@ while Main:
             move_tick_count5 = 0
             for alien5 in alienRow5:
                 alien5.left += dax
-        if (alien5.left < 50 and right == False):
-            right = True
-            dax = -dax
-            for alien5 in alienRow5:
-                alien5.bottom += 10
-            for alien4 in alienRow4:
-                alien4.bottom += 10
-            for alien3 in alienRow3:
-                alien3.bottom += 10
-            for alien2 in alienRow2:
-                alien2.bottom += 10
-            for alien1 in alienRow1:
-                alien1.bottom += 10
-        elif (alien5.right > 950 and right == True):
-            right = False
-            dax = -dax
-            for alien5 in alienRow5:
-                alien5.bottom += 10
-            for alien4 in alienRow4:
-                alien4.bottom += 10
-            for alien3 in alienRow3:
-                alien3.bottom += 10
-            for alien2 in alienRow2:
-                alien2.bottom += 10
-            for alien1 in alienRow1:
-                alien1.bottom += 10
+                if (alien5.left < 50 and right == False):
+                    right = True
+                    dax = -dax
+                    for alien5 in alienRow5:
+                        alien5.bottom += 10
+                    for alien4 in alienRow4:
+                        alien4.bottom += 10
+                    for alien3 in alienRow3:
+                        alien3.bottom += 10
+                    for alien2 in alienRow2:
+                        alien2.bottom += 10
+                    for alien1 in alienRow1:
+                        alien1.bottom += 10
+                elif (alien5.right > 950 and right == True):
+                    right = False
+                    dax = -dax
+                    for alien5 in alienRow5:
+                        alien5.bottom += 10
+                    for alien4 in alienRow4:
+                        alien4.bottom += 10
+                    for alien3 in alienRow3:
+                        alien3.bottom += 10
+                    for alien2 in alienRow2:
+                        alien2.bottom += 10
+                    for alien1 in alienRow1:
+                        alien1.bottom += 10
+            move_tick_count5 = 0
                     
-
-    # movement for ship
-    for event in pygame.event.get():
-        if event.type == pygame.QUIT:
-            game = False
-            #choose = True
-        if event.type == pygame.KEYDOWN:
-            if event.key == pygame.K_q:
-                game = False
-                #choose = True
-            elif event.key == pygame.K_RIGHT:
-                dsx = 5
-            elif event.key == pygame.K_LEFT:
-                dsx = -5
-        if event.type == pygame.KEYUP:
-            if event.key == pygame.K_LEFT or event.key == pygame.K_RIGHT:
-                dsx = 0
-
-            
-            
-        
-    screen.fill(Black)
+    pygame.draw.rect(screen,WHITE,shipRect,0)
+    # movement for ship            
+                
+    #screen.fill(BLACK)
     oldx = shipRect.left
     shipRect.left += dsx
     #if shipRect.collide point(Screen size min + 10, screen size + ship height) or shipRect.collidepoint(Screen size max - 10, screen size + ship height):
-        shipRect.left = oldx
+    shipRect.left = oldx
+    pygame.display.update()
 
 pygame.quit()
-sys.exit()
-        
  ##This is all the working barriers.
+
