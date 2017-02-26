@@ -41,6 +41,7 @@ def game():
     shipy = 725
     shiph = 35#Ship dimentions
     shipw = 75
+    
     moveSpeed = 1000 #number which states the tick count of how long aliens can move
     moveSubt = 150 #number which the moveSpeed is subtracted by to move aliens faster
 
@@ -68,8 +69,6 @@ def game():
     Main = True
     Game = False
     Controls = False
-    Loser = False
-    Choose = True
 
     i = 0
     while i < 8:
@@ -110,36 +109,24 @@ def game():
     for row in aliens:
         for col in row:
             if col == "A":
-                # variables for the sprite
-                ##                alien1_image = pygame.image.load("Alien1.png")
-                ##                alien2_image = pygame.image.load("Alien2.png")
-                ##                alien3_image = pygame.image.load("Alien3.png")
-                        alien1Rect = pygame.Rect(Ax,Ay,30,30)
-                ##                screen.blit(alien1_image(alien1Rect))
-                        alienRow1.append(alien1Rect)
-                        alien2Rect = pygame.Rect(Ax,Ay2,30,30)
-                        alienRow2.append(alien2Rect)
-                ##                screen.blit(alien2_image(alien2Rect))
-                        alien3Rect = pygame.Rect(Ax,Ay3,30,30)
-                ##                screen.blit(alien2_image(alien3Rect))
-                        alienRow3.append(alien3Rect)
-                        alien4Rect = pygame.Rect(Ax,Ay4,30,30)
-                ##                screen.blit(alien3_image(alien4Rect))
-                        alienRow4.append(alien4Rect)
-                        alien5Rect = pygame.Rect(Ax,Ay5,30,30)
-                ##                screen.blit(alien3_image(alien5Rect))
-                        alienRow5.append(alien5Rect)
-            Ax += 75
-        Ax = 115
+                alien1Rect = pygame.Rect(Ax,Ay,30,30)#append a position for each alien in an array
+                alienRow1.append(alien1Rect)
+                alien2Rect = pygame.Rect(Ax,Ay2,30,30)
+                alienRow2.append(alien2Rect)
+                alien3Rect = pygame.Rect(Ax,Ay3,30,30)
+                alienRow3.append(alien3Rect)
+                alien4Rect = pygame.Rect(Ax,Ay4,30,30)
+                alienRow4.append(alien4Rect)
+                alien5Rect = pygame.Rect(Ax,Ay5,30,30)
+                alienRow5.append(alien5Rect)
+            Ax += 75#move the alien x pos over some so they don't overlap
+        Ax = 115#reset it to the beginning for each row of aliens so the are aligned
 
-
-##    screen.fill(BLACK)
-##    pygame.display.update()
     moveclock = pygame.time.Clock()
     move_tick_count = 0
-    moveclock2 = pygame.time.Clock()
+    moveclock2 = pygame.time.Clock()#clocks used for how long an alien has to wait befor moving
     move_tick_count2 = 0
-    moveclock3 = pygame.time.Clock()
+    moveclock3 = pygame.time.Clock()#each clock is for each row
     move_tick_count3 = 0
     moveclock4 = pygame.time.Clock()
     move_tick_count4 = 0
@@ -147,13 +134,11 @@ def game():
     move_tick_count5 = 0
     shipBulletClock = pygame.time.Clock()
     shipBulletTickCount = 0
-
-    game = True
     while Main:
-        length = len(bulletCollection)
+        shipBulletTickCount += shipBulletClock.tick()
+        length = len(bulletCollection)#Checks how many bullets are on the screen. This limits the player from spaming the fire button
         for event in pygame.event.get():
             if event.type == pygame.QUIT:
-                game = False
                 Main = False
                 #choose = True
             if event.type == pygame.KEYDOWN:
@@ -161,16 +146,16 @@ def game():
                     dsx = 5
                 elif event.key == pygame.K_LEFT:
                     dsx = -5
-                elif event.key == pygame.K_UP and (shipBulletTickCount >= 500) or length <= 5:
+                elif event.key == pygame.K_UP and (shipBulletTickCount >= 350) and length <= 2:
                     shipBulletTickCount = 0
                     bulletCollection.append(bulletRect)
             if event.type == pygame.KEYUP:
                 if event.key == pygame.K_LEFT or event.key == pygame.K_RIGHT:
                     dsx = 0
 
-        shipBulletx = shipRect.centerx
+        shipBulletx = shipRect.centerx#center the bullets based on the ship position.
         shipBullety = shipRect.centery + 5
-        bulletRect = pygame.Rect(shipBulletx,shipBullety,5,10)
+        bulletRect = pygame.Rect(shipBulletx,shipBullety,5,10)#Draw the bullet based on the coordinates
         oldx = shipRect.left
         shipRect.left += dsx
         if shipRect.collidepoint(10,725) or shipRect.collidepoint(990,725):
@@ -181,7 +166,7 @@ def game():
         pygame.time.delay(20)
         
         for wallR1 in barrier1:
-            pygame.draw.rect(screen,GREEN,wallR1,0)
+            pygame.draw.rect(screen,GREEN,wallR1,0)#draw all the barriers using the rect in each barrier array
         for wallR2 in barrier2:
             pygame.draw.rect(screen,GREEN,wallR2,0)
         for wallR3 in barrier3:
@@ -189,11 +174,11 @@ def game():
         for wallR4 in barrier4:
             pygame.draw.rect(screen,GREEN,wallR4,0)
 
-        move_tick_count = move_tick_count + moveclock.tick()
-        move_tick_count2 = move_tick_count2 + moveclock2.tick()
-        move_tick_count3 = move_tick_count3 + moveclock3.tick()
-        move_tick_count4 = move_tick_count4 + moveclock4.tick()
-        move_tick_count5 = move_tick_count5 + moveclock5.tick()
+        move_tick_count += moveclock.tick()
+        move_tick_count2 += moveclock2.tick()
+        move_tick_count3 += moveclock3.tick()
+        move_tick_count4 += moveclock4.tick()
+        move_tick_count5 += moveclock5.tick()
 
         scoreStr = "Score: " + (str(score))
         scoreFont = pygame.font.SysFont("ariel", 20, True)#Writen by Dylan
@@ -204,21 +189,19 @@ def game():
             if bullet.top > 0: #if bullet is not at the top of the screen
                 pygame.draw.rect(screen, WHITE, bullet, 0)
                 bullet.top += bulletYspeed #Adds a negative value to move the bullet to the top of the screen.
-                #pygame.display.update()
             elif bullet.top < 0: #checks collide with top of level
                 bulletCollection.remove(bullet)#delete it if it does touch the top
-                #pygame.display.update()
 
-        for wall1 in barrier1:
+        for wall1 in barrier1:#Writen by Dylan      Each square in barrier 1
             for bullet in bulletCollection: 
-                if bullet.colliderect(wall1):
-                    bulletCollection.remove(bullet)
+                if bullet.colliderect(wall1): #if a bullet hits that square
+                    bulletCollection.remove(bullet)#remove the bullet and square from the game
                     barrier1.remove(wall1)
-            for alienBullet in alienBulletArray:
+            for alienBullet in alienBulletArray:#Do the same thing for alien bullets
                 if alienBullet.colliderect(wall1):
                     alienBulletArray.remove(alienBullet)
                     barrier1.remove(wall1)
-        for wall2 in barrier2:
+        for wall2 in barrier2:#run the same loop as above for each barrier
             for bullet in bulletCollection:
                 if bullet.colliderect(wall2):
                     bulletCollection.remove(bullet)
@@ -247,25 +230,24 @@ def game():
                     barrier4.remove(wall4)
 
         for alien1 in alienRow1:
-            screen.blit(AL1Images[imgIndex], (alien1))
+            screen.blit(AL1Images[imgIndex], (alien1))#blit the alien based on an array containing images
             for bullet in bulletCollection:
                 if bullet.colliderect(alien1):
                     score += 100
                     bulletCollection.remove(bullet)
                     alienRow1.remove(alien1)
-            if move_tick_count >= moveSpeed:
+            if move_tick_count >= moveSpeed:#once the move timer is reached
                 move_tick_count = 0
                 if imgIndex == 0:
-                    imgIndex += 1
+                    imgIndex += 1#change the index to change which image is displayed
                 elif imgIndex == 1:
-                    imgIndex = 0
-                for alien1 in alienRow1:
+                    imgIndex = 0#reset the index to 0 once it hits its maximum
+                for alien1 in alienRow1:#and move the alien to left or right(depending which wall is hit)
                     alien1.left += dax
-                    #print alien1.left
-            if (alien1.left < 30 and right == False):
-                dax = -dax
+            if (alien1.left < 30 and right == False):#if the alien hits the left wall
+                dax = -dax #reverse the direction of the alien so it doesn't go off screen
                 for alien5 in alienRow5:
-                    alien5.bottom += 10 
+                    alien5.bottom += 10 #move all aliens down 10 pixels
                 for alien4 in alienRow4:
                     alien4.bottom += 10  
                 for alien3 in alienRow3:
@@ -274,10 +256,9 @@ def game():
                     alien2.bottom += 10
                 for alien1 in alienRow1:
                     alien1.bottom += 10
-                    #alien1.right += (1/2)*dax
                 right = True
-                if moveSpeed > 100:
-                    moveSpeed -= moveSubt
+                if moveSpeed > 100: #If the max speed of the aliens isn't reached
+                    moveSpeed -= moveSubt #speed the aliens up after hitting the left wall
             if (alien1.right > 970 and right == True):
                 dax = -dax
                 for alien5 in alienRow5:
@@ -292,10 +273,10 @@ def game():
                     alien1.bottom += 10
                     alien1.left += 2*dax
                 right = False
-            if alien1.bottom >= 650:
-                loser()
+            if alien1.bottom >= 650:#if the aliens reach the barriers at the bottom
+                loser()#it's game over, call loser() function stating it's game over
                     
-        for alien2 in alienRow2:
+        for alien2 in alienRow2:#Do the same thing for each row. This is because if a row 
             screen.blit(AL2Images[imgIndex], (alien2))
             for bullet in bulletCollection:
                 if bullet.colliderect(alien2):
