@@ -1,10 +1,3 @@
-#######################################################
-#   Final Project: Space Invaders                     #
-#   Programmer:  Matthew Litt                         #
-#   Class: ICS3U                                      #
-#   Teacher: Mr. Holik                                #
-#######################################################
-
 import pygame
 import sys
 from random import randint
