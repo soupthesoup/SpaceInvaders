@@ -19,6 +19,22 @@ AL2Images = [pygame.image.load("Alien2a.png"), pygame.image.load("Alien2b.png")]
 AL3Images = [pygame.image.load("Alien3a.png"), pygame.image.load("Alien3b.png")]
 ship = pygame.image.load("SpaceGun.png")
 
+player_killed = pygame.mixer.music.load('explosion.wav') #loads sounds for use in the game.
+invader_killed = pygame.mixer.music.load('invaderkilled.wav')
+shoot = pygame.mixer.music.load('shoot.wav')
+
+def player.explosion():
+    pygame.mixer.Sound.play(player_killed)
+    pygame.mixer.music.stop()
+
+def invader.killed():
+	pygame.mixer.Sound.play(invader_killed)
+	pygame.mixer.music.stop()
+
+def shoot():
+	pygame.mixer.Sound.play(shoot)
+	pygame.mixer.music.stop()
+
 def game():
     imgIndex = 0
     Ax = 115 #alien x position
