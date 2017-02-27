@@ -18,6 +18,26 @@ AL1Images = [pygame.image.load("Alien1a.png"), pygame.image.load("Alien1b.png")]
 AL2Images = [pygame.image.load("Alien2a.png"), pygame.image.load("Alien2b.png")]
 AL3Images = [pygame.image.load("Alien3a.png"), pygame.image.load("Alien3b.png")]
 ship = pygame.image.load("SpaceGun.png")
+#written by Matt.L
+# loads different sounds and puts them into variables to be called
+playerKilled = pygame.mixer.music.load('explosion.wav')
+invaderKilled = pygame.mixer.music.load('invaderkilled.wav')
+shoot = pygame.mixer.music.load('shoot.wav')
+
+
+# function for different sounds
+def player_explosion():
+  pygame.mixer.Sound.play(playerKilled)
+  pygame.mixer.music.stop()
+
+def invader_killed():
+	pygame.mixer.Sound.play(invaderKilled)
+	pygame.mixer.music.stop()
+
+def shoot():
+	pygame.mixer.Sound.play(shoot)
+	pygame.mixer.music.stop()
+  
 
 def game():
     imgIndex = 0
@@ -147,6 +167,7 @@ def game():
                 elif event.key == pygame.K_LEFT:
                     dsx = -5
                 elif event.key == pygame.K_UP and (shipBulletTickCount >= 350) and length <= 2:
+                    shoot()
                     shipBulletTickCount = 0
                     bulletCollection.append(bulletRect)
             if event.type == pygame.KEYUP:
@@ -233,6 +254,7 @@ def game():
             screen.blit(AL1Images[imgIndex], (alien1))#blit the alien based on an array containing images
             for bullet in bulletCollection:
                 if bullet.colliderect(alien1):
+                    invader_killed()
                     score += 100
                     bulletCollection.remove(bullet)
                     alienRow1.remove(alien1)
@@ -280,6 +302,7 @@ def game():
             screen.blit(AL2Images[imgIndex], (alien2))
             for bullet in bulletCollection:
                 if bullet.colliderect(alien2):
+                    invader_killed()
                     score += 40
                     bulletCollection.remove(bullet)
                     alienRow2.remove(alien2)
@@ -328,6 +351,7 @@ def game():
             screen.blit(AL2Images[imgIndex], (alien3))
             for bullet in bulletCollection:
                 if bullet.colliderect(alien3):
+                    invader_killed()
                     score += 40
                     bulletCollection.remove(bullet)
                     alienRow3.remove(alien3)
@@ -375,6 +399,7 @@ def game():
             screen.blit(AL3Images[imgIndex], (alien4))
             for bullet in bulletCollection:
                 if bullet.colliderect(alien4):
+                    invader_killed()
                     score += 20
                     bulletCollection.remove(bullet)
                     alienRow4.remove(alien4)
@@ -422,6 +447,7 @@ def game():
             screen.blit(AL3Images[imgIndex], (alien5))
             for bullet in bulletCollection:
                 if bullet.colliderect(alien5):
+                    invader_killed()
                     score += 20
                     bulletCollection.remove(bullet)
                     alienRow5.remove(alien5)
