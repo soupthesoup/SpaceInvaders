@@ -273,6 +273,45 @@ def game():
 		    invaderKilled()
                     bulletCollection.remove(bullet)
                     alienRow1.remove(alien1)
+			
+	    ALIndex = alienRow1.index(alien1)
+	    if alienBulletTickCount >= alienBulletTimer[ALIndex]:
+		for alien2 in alienRow2:
+		    pygame.time.delay(10)
+		    alx = alien1.x
+		    aly = alien1.y + 50
+		    if alien2.collidepoint((alx, aly)) == False:
+			aly += 50
+			for alien3 in alienRow3:
+			    pygame.time.delay(10)
+			    if alien3.collidepoint((alx, aly)) == False:
+				aly += 50
+				for alien4 in alienRow4:
+				    pygame.time.delay(10)
+				    if alien4.collidepoint((alx, aly)) == False:
+					aly += 50
+					for alien5 in alienRow5:
+					    pygame.time.delay(10)
+					    if alien5.collidepoint((alx, aly)) == False:
+						alienBulPosx = alien1.centerx
+						alienBulPosy = alien1.centery + 25
+						alienBulRect = pygame.Rect(alienBulPosx, alienBulPosy, 5, 10)
+						alienBulletArray.append(alienBulRect)
+						#break
+					    elif alien5.collidepoint((alx, aly)):
+						print "Don't Shoot"
+						break
+				    elif alien4.collidepoint((alx, aly)):
+					print "Don't Shoot"
+					break
+			    elif alien3.collidepoint((alx, aly)):
+				print "Don't Shoot"
+				break
+		    elif alien2.collidepoint((alx, aly)):
+			print "Don't Shoot"
+			break
+		alienBulletTickCount = 0
+		
             if move_tick_count >= moveSpeed:#once the move timer is reached
                 move_tick_count = 0
                 if imgIndex == 0:
@@ -282,10 +321,14 @@ def game():
                 for alien1 in alienRow1:#and move the alien to left or right(depending which wall is hit)
                     alien1.left += dax
 
-                
+		
+		####################
+		#COMMENT THIS BLOCK#
+		####################		
+		
                 for alien1 in alienRow1:
                     pygame.time.delay(10)
-                    ALIndex = alienRow1.index(alien1)  -1                   
+                    ALIndex = alienRow1.index(alien1) - 1                   
                     if alienBulletTickCount >= alienBulletTimer[ALIndex]:
                         for alien2 in alienRow2:
                             pygame.time.delay(10)
@@ -311,18 +354,23 @@ def game():
                                                         #break
                                                     elif alien5.collidepoint((alx, aly)):
                                                         print "Don't Shoot"
-                                                       #break
+                                                        break
                                             elif alien4.collidepoint((alx, aly)):
                                                 print "Don't Shoot"
-                                                #break
+                                                break
                                     elif alien3.collidepoint((alx, aly)):
                                         print "Don't Shoot"
-                                        #break
+                                        break
                             elif alien2.collidepoint((alx, aly)):
                                 print "Don't Shoot"
-                                #break
+                                break
                         alienBulletTickCount = 0                 
                     
+		####################
+		#COMMENT THIS BLOCK#
+		####################
+		
+		
             if (alien1.left < 30 and right == False):#if the alien hits the left wall
                 dax = -dax #reverse the direction of the alien so it doesn't go off screen
                 for alien5 in alienRow5:
@@ -362,7 +410,38 @@ def game():
                     score += 40
 		    invaderKilled()
                     bulletCollection.remove(bullet)
-                    alienRow2.remove(alien2)
+                    alienRow2.remove(alien2)	
+	    ALIndex = alienRow1.index(alien1)
+	    if alienBulletTickCount >= alienBulletTimer[ALIndex]:
+		for alien3 in alienRow3:
+		    pygame.time.delay(10)
+		    alx = alien1.x
+		    aly = alien1.y + 50
+		    if alien3.collidepoint((alx, aly)) == False:
+			aly += 50
+			for alien4 in alienRow4:
+			    pygame.time.delay(10)
+			    if alien4.collidepoint((alx, aly)) == False:
+				aly += 50
+				for alien5 in alienRow5:
+				    pygame.time.delay(10)
+				    if alien5.collidepoint((alx, aly)) == False:
+					alienBulPosx = alien1.centerx
+					alienBulPosy = alien1.centery + 25
+					alienBulRect = pygame.Rect(alienBulPosx, alienBulPosy, 5, 10)
+					alienBulletArray.append(alienBulRect)
+					#break
+				    elif alien5.collidepoint((alx, aly)):
+					print "Don't Shoot"
+					break
+			    elif alien4.collidepoint((alx, aly)):
+				print "Don't Shoot"
+				break
+		    elif alien3.collidepoint((alx, aly)):
+			print "Don't Shoot"
+			break
+		alienBulletTickCount = 0
+			
             if move_tick_count2 >= moveSpeed:
                 move_tick_count2 = 0
                 if imgIndex == 0:
@@ -412,6 +491,29 @@ def game():
 		    invaderKilled()
                     bulletCollection.remove(bullet)
                     alienRow3.remove(alien3)
+	    ALIndex = alienRow1.index(alien1)
+	    if alienBulletTickCount >= alienBulletTimer[ALIndex]:
+		for alien4 in alienRow4:
+		    pygame.time.delay(10)
+		    alx = alien1.x
+		    aly = alien1.y + 50
+		    if alien4.collidepoint((alx, aly)) == False:
+			aly += 50
+			for alien5 in alienRow5:
+			    pygame.time.delay(10)
+			    if alien5.collidepoint((alx, aly)) == False:
+				alienBulPosx = alien1.centerx
+				alienBulPosy = alien1.centery + 25
+				alienBulRect = pygame.Rect(alienBulPosx, alienBulPosy, 5, 10)
+				alienBulletArray.append(alienBulRect)
+				#break
+			    elif alien5.collidepoint((alx, aly)):
+				print "Don't Shoot"
+				break
+		    elif alien4.collidepoint((alx, aly)):
+			print "Don't Shoot"
+			break
+		alienBulletTickCount = 0
             if move_tick_count3 >= moveSpeed:
                 move_tick_count3 = 0
                 if imgIndex == 0:
@@ -460,6 +562,22 @@ def game():
 		    invaderKilled()
                     bulletCollection.remove(bullet)
                     alienRow4.remove(alien4)
+	    ALIndex = alienRow1.index(alien1)
+	    if alienBulletTickCount >= alienBulletTimer[ALIndex]:
+		for alien5 in alienRow5:
+		    pygame.time.delay(10)
+		    alx = alien1.x
+		    aly = alien1.y + 50
+		    if alien5.collidepoint((alx, aly)) == False:
+			alienBulPosx = alien1.centerx
+			alienBulPosy = alien1.centery + 25
+			alienBulRect = pygame.Rect(alienBulPosx, alienBulPosy, 5, 10)
+			alienBulletArray.append(alienBulRect)
+			#break
+		    elif alien5.collidepoint((alx, aly)):
+			print "Don't Shoot"
+			break
+		alienBulletTickCount = 0
             if move_tick_count4 >= moveSpeed:
                 move_tick_count4 = 0
                 if imgIndex == 0:
@@ -508,6 +626,15 @@ def game():
 		    invaderKilled()
                     bulletCollection.remove(bullet)
                     alienRow5.remove(alien5)
+	    ALIndex = alienRow1.index(alien1)
+	    if alienBulletTickCount >= alienBulletTimer[ALIndex]:
+	    	pygame.time.delay(10)
+		alienBulPosx = alien1.centerx
+		alienBulPosy = alien1.centery + 25
+		alienBulRect = pygame.Rect(alienBulPosx, alienBulPosy, 5, 10)
+		alienBulletArray.append(alienBulRect)
+		#break
+		alienBulletTickCount = 0
             if move_tick_count5 >= moveSpeed:
                 move_tick_count5 = 0
                 if imgIndex == 0:
