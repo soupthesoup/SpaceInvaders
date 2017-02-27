@@ -210,7 +210,8 @@ def game():
 
         
         alienBulletTickCount += alienBulletClock.tick()
-
+	#Don't remember why I tabbed this, don't tab it back yet though
+	#Maybe for multiple clocks for each row?
 
 
 
@@ -274,7 +275,7 @@ def game():
                     bulletCollection.remove(bullet)
                     alienRow1.remove(alien1)
 			
-	    ALIndex = alienRow1.index(alien1)
+	    ALIndex = alienRow1.index(alien1) #Gets an Index number based on the alien1 index in alienRow1
 	    if alienBulletTickCount >= alienBulletTimer[ALIndex]:
 		for alien2 in alienRow2:
 		    pygame.time.delay(10)
