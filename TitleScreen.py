@@ -76,10 +76,6 @@ def TitleScreen():
                     terminate()
                 elif event.key == pygame.K_i:
                     info = True
-            if event.type  == pygame.MOUSEBUTTONDOWN and event.button == 1:
-                    mousePos = pygame.mouse.get_pos()
-                    if ((500 - IW / 2), 200 + ST1H + ST2H + SH).collidepoint(mousePos):
-                        info = True
                     
         screen.fill(Black)
         screen.blit(SpaceTitle1,((500 - ST1W / 2), 100))
