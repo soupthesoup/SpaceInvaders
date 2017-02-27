@@ -23,11 +23,11 @@ player_killed = pygame.mixer.music.load('explosion.wav') #loads sounds for use i
 invader_killed = pygame.mixer.music.load('invaderkilled.wav')
 shoot = pygame.mixer.music.load('shoot.wav')
 
-def player.explosion():
+def playerExplosion():
     pygame.mixer.Sound.play(player_killed)
     pygame.mixer.music.stop()
 
-def invader.killed():
+def invaderKilled():
 	pygame.mixer.Sound.play(invader_killed)
 	pygame.mixer.music.stop()
 
@@ -270,6 +270,7 @@ def game():
             for bullet in bulletCollection:
                 if bullet.colliderect(alien1):
                     score += 100
+		    invaderKilled()
                     bulletCollection.remove(bullet)
                     alienRow1.remove(alien1)
             if move_tick_count >= moveSpeed:#once the move timer is reached
@@ -359,6 +360,7 @@ def game():
             for bullet in bulletCollection:
                 if bullet.colliderect(alien2):
                     score += 40
+		    invaderKilled()
                     bulletCollection.remove(bullet)
                     alienRow2.remove(alien2)
             if move_tick_count2 >= moveSpeed:
@@ -407,6 +409,7 @@ def game():
             for bullet in bulletCollection:
                 if bullet.colliderect(alien3):
                     score += 40
+		    invaderKilled()
                     bulletCollection.remove(bullet)
                     alienRow3.remove(alien3)
             if move_tick_count3 >= moveSpeed:
@@ -454,6 +457,7 @@ def game():
             for bullet in bulletCollection:
                 if bullet.colliderect(alien4):
                     score += 20
+		    invaderKilled()
                     bulletCollection.remove(bullet)
                     alienRow4.remove(alien4)
             if move_tick_count4 >= moveSpeed:
@@ -501,6 +505,7 @@ def game():
             for bullet in bulletCollection:
                 if bullet.colliderect(alien5):
                     score += 20
+		    invaderKilled()
                     bulletCollection.remove(bullet)
                     alienRow5.remove(alien5)
             if move_tick_count5 >= moveSpeed:
