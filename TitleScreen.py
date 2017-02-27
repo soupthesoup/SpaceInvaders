@@ -54,8 +54,8 @@ def TitleScreen():
     SW = Start.get_width()
     IH = Info.get_height()
     IW = Info.get_width()
-    CH = Credits.get_height()
-    CW = Credits.get_width()
+    CH = Credits.get_height()  #You can do CreditsPosition = Credits.get_rect(center(1000/2, 800/2))   1000 being screen width, 800 being screen hieght. This will center
+    CW = Credits.get_width() #the text and you can add value to those devisions to move it up/down left/right easily and still be centered.
     EH = Exit.get_height()
     EW = Exit.get_width()
     ITW = ITitle.get_width()
@@ -63,7 +63,7 @@ def TitleScreen():
     AClock = pygame.time.Clock() #Clock variables
     ACount = 0
 
-    num = -1
+    num = -1 
     
     while title:
         for event in pygame.event.get():
@@ -76,6 +76,10 @@ def TitleScreen():
                     terminate()
                 elif event.key == pygame.K_i:
                     info = True
+            if event.type  == pygame.MOUSEBUTTONDOWN and event.button == 1:
+                    mousePos = pygame.mouse.get_pos()
+                    if ((500 - IW / 2), 200 + ST1H + ST2H + SH).collidepoint(mousePos):
+                        info = True
                     
         screen.fill(Black)
         screen.blit(SpaceTitle1,((500 - ST1W / 2), 100))
@@ -87,13 +91,9 @@ def TitleScreen():
         screen.blit(Exit,((500 - EW / 2), 200 + ST1H + ST2H + SH + IH + CH))
         pygame.draw.rect(screen, White, (0,0,1000,800), 10)
         pygame.display.update()
-        ACount  AClock.tick()
-        if ACount == 1000:
-            ACount = 0
-            num = num * -1
-            print num
-
+        
         while info:
+            ACount += AClock.tick()
             for event in pygame.event.get():
                 if event.type == pygame.QUIT:
                     terminate()
@@ -101,10 +101,10 @@ def TitleScreen():
                     if event.key == pygame.K_r:
                         info = False
                         
-            if ACount == 1000:
-                ACount = 0
+            if ACount >= 1000:
                 num = num * -1
                 print num
+                ACount = 0
                 
             screen.fill(Black)
             screen.blit(ITitle,((500 - ITW / 2), 30))
@@ -112,7 +112,7 @@ def TitleScreen():
                 screen.blit(AL1a,(50,50))
             if num > 0:
                 screen.blit(AL1b,(50,50))
-            pygame.draw.rect(screen, White, (0,0,1000,800), 10)
+            #pygame.draw.rect(screen, White, (0,0,1000,800), 10) #what's the point of filling the screen with black and then filling it with white?
             pygame.display.update()
                     
 
