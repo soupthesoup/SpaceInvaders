@@ -66,6 +66,8 @@ def TitleScreen():
     num = -1 
     
     while title:
+        AClock = pygame.time.Clock()
+        ACount = 0
         for event in pygame.event.get():
             if event.type == pygame.QUIT:
                 title = False
@@ -89,7 +91,7 @@ def TitleScreen():
         pygame.display.update()
         
         while info:
-            ACount += AClock.tick()
+            ACount = ACount + AClock.tick()
             for event in pygame.event.get():
                 if event.type == pygame.QUIT:
                     terminate()
