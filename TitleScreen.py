@@ -79,7 +79,7 @@ def TitleScreen():
     AClock = pygame.time.Clock() #Clock variables
     ACount = 0
 
-    num = -1
+    num = -1 #other variables
     bx1 = 150
     bx2 = 350
     bx3 = 550
@@ -92,7 +92,6 @@ def TitleScreen():
     Gunx = 435
     Guny = 250
     Gundx = 5
-    
     barrier = [
         "WWWWWWWWWWWWWWWWWWWW",
         "WWWWWWWWWWWWWWWWWWWW",
@@ -100,7 +99,7 @@ def TitleScreen():
         "WWWWW          WWWWW",
         ]
 
-    for row in barrier:
+    for row in barrier: #Putting the barriers into an array to br drawn later
         for col in row:
             if col == "W":
                 wallR1 = pygame.Rect(bx1,by,5,10)
@@ -121,8 +120,8 @@ def TitleScreen():
         bx3 = 550
         bx4 = 750
         
-    while title:
-        for event in pygame.event.get():
+    while title: 
+        for event in pygame.event.get(): #User input
             if event.type == pygame.QUIT:
                 title = False
                 terminate()
@@ -149,7 +148,7 @@ def TitleScreen():
         screen.blit(Info,((500 - IW / 2), 200 + ST1H + ST2H + SH))
         screen.blit(Exit,((500 - EW / 2), 200 + ST1H + ST2H + SH + IH))
         if num <= 0:
-            screen.blit(AL1a, (75,100))
+            screen.blit(AL1a, (75,100)) #Aliens being drawn
             screen.blit(AL2a, (59,200))
             screen.blit(AL3a, (64,300))
             screen.blit(AL1a, (75,400))
@@ -163,7 +162,7 @@ def TitleScreen():
             screen.blit(AL3a, (848,600))
             
         elif num >=0:
-            screen.blit(AL1b, (75,100))
+            screen.blit(AL1b, (75,100)) #other animation of aliens being drawn
             screen.blit(AL2b, (59,200))
             screen.blit(AL3b, (64,300))
             screen.blit(AL1b, (75,400))
@@ -190,12 +189,12 @@ def TitleScreen():
                 num = num * -1
                 ACount = 0
 
-            Gunx = Gunx + Gundx
+            Gunx = Gunx + Gundx #Gun Movement function
 
             if Gunx <= 10 or Gunx >= 790 + GunW - 35:
                 Gundx = Gundx * -1
                 
-            screen.fill(Black)
+            screen.fill(Black) #Everything being drawn
             screen.blit(ITitle,((500 - ITW / 2), 30))
             if num < 0:
                 screen.blit(AL1a,(100,125))
@@ -210,7 +209,7 @@ def TitleScreen():
             screen.blit(AL3Info,(725,200))
             screen.blit(SHIP,(Gunx,Guny))
             screen.blit(SHIPInfo,((500 - SIW / 2),330))
-            for WALL1 in barrier1:
+            for WALL1 in barrier1: #drawing of the barriers
                 pygame.draw.rect(screen,Green,WALL1,0)
             for WALL2 in barrier2:
                 pygame.draw.rect(screen,Green,WALL2,0)
