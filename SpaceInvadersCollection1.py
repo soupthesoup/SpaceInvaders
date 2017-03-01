@@ -1,5 +1,6 @@
 import pygame
 import sys
+import time
 from random import randint
 
 pygame.init()
@@ -18,28 +19,21 @@ AL1Images = [pygame.image.load("Alien1a.png"), pygame.image.load("Alien1b.png")]
 AL2Images = [pygame.image.load("Alien2a.png"), pygame.image.load("Alien2b.png")]
 AL3Images = [pygame.image.load("Alien3a.png"), pygame.image.load("Alien3b.png")]
 ship = pygame.image.load("SpaceGun.png")
-#written by Matt.L
-# loads different sounds and puts them into variables to be called
-playerKilled = pygame.mixer.music.load('explosion.wav')
-invaderKilled = pygame.mixer.music.load('invaderkilled.wav')
-shoot = pygame.mixer.music.load('shoot.wav')
 
+def playerExplosion():
+    playerKilled = pygame.mixer.Sound("explosion.wav")
+    playerSound = playerKilled.play()
 
-# function for different sounds
-def player_explosion():
-  pygame.mixer.Sound.play(playerKilled)
-  pygame.mixer.music.stop()
-
-def invader_killed():
-	pygame.mixer.Sound.play(invaderKilled)
-	pygame.mixer.music.stop()
+def invaderKilled():
+    invaderKilled = pygame.mixer.Sound("invaderkilled.wav")
+    invaderSound = invaderKilled.play()
 
 def shoot():
-	pygame.mixer.Sound.play(shoot)
-	pygame.mixer.music.stop()
-  
+    shoot = pygame.mixer.Sound("shoot.wav")
+    shootSound = shoot.play()
 
 def game():
+    pygame.mixer.init()
     imgIndex = 0
     Ax = 115 #alien x position
     Ay = 150 #alien y position for row 1
@@ -79,9 +73,11 @@ def game():
     alienRow3 = []
     alienRow4 = []
     alienRow5 = []
+    
     bulletCollection = []
     alienBulletArray = []
     alienBulletTimer = []   #Random numbers as a timer for aliens
+    alienClockArray = [0,0,0,0,0,0,0,0,0,0,0,0]
 
     shipRect = pygame.Rect(shipx,shipy,shipw,shiph)
 
@@ -92,7 +88,7 @@ def game():
 
     i = 0
     while i < 8:
-        shootTime = randint(2, 8)   #randint(minValue, maxValue)
+        shootTime = randint(2500, 8000)   #randint(minValue, maxValue)
         alienBulletTimer.append(shootTime)
         #print alienBulletTimer[i]  #testing if number randomized works
         i += 1 
@@ -154,6 +150,40 @@ def game():
     move_tick_count5 = 0
     shipBulletClock = pygame.time.Clock()
     shipBulletTickCount = 0
+    
+    alienBulletClock = pygame.time.Clock()
+    alienBulletTickCount = 0
+    alienBulletClock2 = pygame.time.Clock()
+    alienBulletTickCount2 = 0
+    alienBulletClock3 = pygame.time.Clock()
+    alienBulletTickCount3 = 0
+    alienBulletClock4 = pygame.time.Clock()
+    alienBulletTickCount4 = 0
+    alienBulletClock5 = pygame.time.Clock()
+    alienBulletTickCount5 = 0
+    alienBulletClock6 = pygame.time.Clock()
+    alienBulletTickCount6 = 0
+    alienBulletClock7 = pygame.time.Clock()
+    alienBulletTickCount7 = 0
+    alienBulletClock8 = pygame.time.Clock()
+    alienBulletTickCount8 = 0
+    alienBulletClock9 = pygame.time.Clock()
+    alienBulletTickCount9 = 0
+    alienBulletClock10 = pygame.time.Clock()
+    alienBulletTickCount10 = 0
+    alienBulletClock11 = pygame.time.Clock()
+    alienBulletTickCount11 = 0
+    alienBulletClock12 = pygame.time.Clock()
+    alienBulletTickCount12 = 0
+
+    i = 0
+    while i < 12:
+        shootTime = randint(8000, 12000)   #randint(minValue, maxValue)
+        alienBulletTimer.append(shootTime)
+        #print alienBulletTimer[i]  #testing if number randomized works
+        i += 1 
+
+    
     while Main:
         shipBulletTickCount += shipBulletClock.tick()
         length = len(bulletCollection)#Checks how many bullets are on the screen. This limits the player from spaming the fire button
@@ -167,9 +197,9 @@ def game():
                 elif event.key == pygame.K_LEFT:
                     dsx = -5
                 elif event.key == pygame.K_UP and (shipBulletTickCount >= 350) and length <= 2:
-                    shoot()
                     shipBulletTickCount = 0
                     bulletCollection.append(bulletRect)
+                    shoot()
             if event.type == pygame.KEYUP:
                 if event.key == pygame.K_LEFT or event.key == pygame.K_RIGHT:
                     dsx = 0
@@ -201,18 +231,52 @@ def game():
         move_tick_count4 += moveclock4.tick()
         move_tick_count5 += moveclock5.tick()
 
+        alienBulletTickCount += alienBulletClock.tick()
+        alienBulletTickCount2 += alienBulletClock2.tick()
+        alienBulletTickCount3 += alienBulletClock3.tick()
+        alienBulletTickCount4 += alienBulletClock4.tick()
+        alienBulletTickCount5 += alienBulletClock5.tick()
+        alienBulletTickCount6 += alienBulletClock6.tick()
+        alienBulletTickCount7 += alienBulletClock7.tick()
+        alienBulletTickCount8 += alienBulletClock8.tick()
+        alienBulletTickCount9 += alienBulletClock9.tick()
+        alienBulletTickCount10 += alienBulletClock10.tick()
+        alienBulletTickCount11 += alienBulletClock11.tick()
+        alienBulletTickCount12 += alienBulletClock12.tick()
+
+        alienClockArray[0] = alienBulletTickCount
+        alienClockArray[1] = alienBulletTickCount2
+        alienClockArray[2] = alienBulletTickCount3
+        alienClockArray[3] = alienBulletTickCount4
+        alienClockArray[4] = alienBulletTickCount5
+        alienClockArray[5] = alienBulletTickCount6
+        alienClockArray[6] = alienBulletTickCount7
+        alienClockArray[7] = alienBulletTickCount8
+        alienClockArray[8] = alienBulletTickCount9
+        alienClockArray[9] = alienBulletTickCount10
+        alienClockArray[10] = alienBulletTickCount11
+        alienClockArray[11] = alienBulletTickCount12
+
         scoreStr = "Score: " + (str(score))
         scoreFont = pygame.font.SysFont("ariel", 20, True)#Writen by Dylan
         scoreText = scoreFont.render(scoreStr, True, WHITE)
         screen.blit(scoreText, (50, 50))
 
+        #print alienBulletTickCount
         for bullet in bulletCollection:#Writen by Dylan
             if bullet.top > 0: #if bullet is not at the top of the screen
                 pygame.draw.rect(screen, WHITE, bullet, 0)
                 bullet.top += bulletYspeed #Adds a negative value to move the bullet to the top of the screen.
             elif bullet.top < 0: #checks collide with top of level
                 bulletCollection.remove(bullet)#delete it if it does touch the top
-
+				
+        for alienBullet in alienBulletArray:
+            if alienBullet.bottom > 800:
+                alienBulletArray.remove(alienBullet)
+            elif alienBullet.bottom < 800:
+                pygame.draw.rect(screen, WHITE, alienBullet, 0)
+                alienBullet.bottom += alienBulletdy
+				
         for wall1 in barrier1:#Writen by Dylan      Each square in barrier 1
             for bullet in bulletCollection: 
                 if bullet.colliderect(wall1): #if a bullet hits that square
@@ -250,205 +314,48 @@ def game():
                     alienBulletArray.remove(alienBullet)
                     barrier4.remove(wall4)
 
-        for alien1 in alienRow1:
-            screen.blit(AL1Images[imgIndex], (alien1))#blit the alien based on an array containing images
-            for bullet in bulletCollection:
-                if bullet.colliderect(alien1):
-                    invader_killed()
-                    score += 100
-                    bulletCollection.remove(bullet)
-                    alienRow1.remove(alien1)
-            if move_tick_count >= moveSpeed:#once the move timer is reached
-                move_tick_count = 0
-                if imgIndex == 0:
-                    imgIndex += 1#change the index to change which image is displayed
-                elif imgIndex == 1:
-                    imgIndex = 0#reset the index to 0 once it hits its maximum
-                for alien1 in alienRow1:#and move the alien to left or right(depending which wall is hit)
-                    alien1.left += dax
-            if (alien1.left < 30 and right == False):#if the alien hits the left wall
-                dax = -dax #reverse the direction of the alien so it doesn't go off screen
-                for alien5 in alienRow5:
-                    alien5.bottom += 10 #move all aliens down 10 pixels
-                for alien4 in alienRow4:
-                    alien4.bottom += 10  
-                for alien3 in alienRow3:
-                    alien3.bottom += 10
-                for alien2 in alienRow2:
-                    alien2.bottom += 10
-                for alien1 in alienRow1:
-                    alien1.bottom += 10
-                right = True
-                if moveSpeed > 100: #If the max speed of the aliens isn't reached
-                    moveSpeed -= moveSubt #speed the aliens up after hitting the left wall
-            if (alien1.right > 970 and right == True):
-                dax = -dax
-                for alien5 in alienRow5:
-                    alien5.bottom += 10
-                for alien4 in alienRow4:
-                    alien4.bottom += 10
-                for alien3 in alienRow3:
-                    alien3.bottom += 10
-                for alien2 in alienRow2:
-                    alien2.bottom += 10
-                for alien1 in alienRow1:
-                    alien1.bottom += 10
-                    alien1.left += 2*dax
-                right = False
-            if alien1.bottom >= 650:#if the aliens reach the barriers at the bottom
-                loser()#it's game over, call loser() function stating it's game over
-                    
-        for alien2 in alienRow2:#Do the same thing for each row. This is because if a row 
-            screen.blit(AL2Images[imgIndex], (alien2))
-            for bullet in bulletCollection:
-                if bullet.colliderect(alien2):
-                    invader_killed()
-                    score += 40
-                    bulletCollection.remove(bullet)
-                    alienRow2.remove(alien2)
-            if move_tick_count2 >= moveSpeed:
-                move_tick_count2 = 0
-                if imgIndex == 0:
-                    imgIndex += 1
-                elif imgIndex == 1:
-                    imgIndex = 0
-                for alien2 in alienRow2:
-                    alien2.left += dax
-            if (alien2.left < 30 and right == False):
-                right = True
-                dax = -dax
-                for alien5 in alienRow5:
-                    alien5.bottom += 10
-                for alien4 in alienRow4:
-                    alien4.bottom += 10
-                for alien3 in alienRow3:
-                    alien3.bottom += 10
-                for alien2 in alienRow2:
-                    alien2.bottom += 10
-                for alien1 in alienRow1:
-                    alien1.bottom += 10
-                if moveSpeed > 100:
-                    moveSpeed -= moveSubt
-            elif (alien2.right > 970 and right == True):
-                right = False
-                dax = -dax
-                for alien5 in alienRow5:
-                    alien5.bottom += 10
-                for alien4 in alienRow4:
-                    alien4.bottom += 10
-                for alien3 in alienRow3:
-                    alien3.bottom += 10
-                for alien2 in alienRow2:
-                    alien2.bottom += 10
-                    alien2.left += 2*dax
-                for alien1 in alienRow1:
-                    alien1.bottom += 10
-                    alien1.left += 2*dax
-            if alien2.bottom >= 650:
-                loser()
-
-        for alien3 in alienRow3:
-            screen.blit(AL2Images[imgIndex], (alien3))
-            for bullet in bulletCollection:
-                if bullet.colliderect(alien3):
-                    invader_killed()
-                    score += 40
-                    bulletCollection.remove(bullet)
-                    alienRow3.remove(alien3)
-            if move_tick_count3 >= moveSpeed:
-                move_tick_count3 = 0
-                if imgIndex == 0:
-                    imgIndex += 1
-                elif imgIndex == 1:
-                    imgIndex = 0
-                for alien3 in alienRow3:
-                    alien3.left += dax
-            if (alien3.left < 30 and right == False):
-                right = True
-                dax = -dax
-                for alien5 in alienRow5:
-                    alien5.bottom += 10
-                for alien4 in alienRow4:
-                    alien4.bottom += 10
-                for alien3 in alienRow3:
-                    alien3.bottom += 10
-                for alien2 in alienRow2:
-                    alien2.bottom += 10
-                for alien1 in alienRow1:
-                    alien1.bottom += 10
-                if moveSpeed > 100:    
-                    moveSpeed -= moveSubt
-            elif (alien3.right > 970 and right == True):
-                right = False
-                dax = -dax
-                for alien5 in alienRow5:
-                    alien5.bottom += 10
-                for alien4 in alienRow4:
-                    alien4.bottom += 10
-                for alien3 in alienRow3:
-                    alien3.bottom += 10
-                    alien3.left += 2*dax
-                for alien2 in alienRow2:
-                    alien2.bottom += 10
-                for alien1 in alienRow1:
-                    alien1.bottom += 10
-            if alien3.bottom >= 650:
-                loser()
-
-        for alien4 in alienRow4:
-            screen.blit(AL3Images[imgIndex], (alien4))
-            for bullet in bulletCollection:
-                if bullet.colliderect(alien4):
-                    invader_killed()
-                    score += 20
-                    bulletCollection.remove(bullet)
-                    alienRow4.remove(alien4)
-            if move_tick_count4 >= moveSpeed:
-                move_tick_count4 = 0
-                if imgIndex == 0:
-                    imgIndex += 1
-                elif imgIndex == 1:
-                    imgIndex = 0
-                for alien4 in alienRow4:
-                    alien4.left += dax
-            if (alien4.left < 30 and right == False):
-                right = True
-                dax = -dax
-                for alien5 in alienRow5:
-                    alien5.bottom += 10
-                for alien4 in alienRow4:
-                    alien4.bottom += 10
-                for alien3 in alienRow3:
-                    alien3.bottom += 10
-                for alien2 in alienRow2:
-                    alien2.bottom += 10
-                for alien1 in alienRow1:
-                    alien1.bottom += 10
-                if moveSpeed > 100:
-                    moveSpeed -= moveSubt
-            elif (alien4.right > 970 and right == True):
-                right = False
-                dax = -dax
-                for alien5 in alienRow5:
-                    alien5.bottom += 10
-                for alien4 in alienRow4:
-                    alien4.bottom += 10
-                    alien4.left += 2*dax
-                for alien3 in alienRow3:
-                    alien3.bottom += 10
-                for alien2 in alienRow2:
-                    alien2.bottom += 10
-                for alien1 in alienRow1:
-                    alien1.bottom += 10
-            if alien4.bottom >= 650:
-                loser()
 
         for alien5 in alienRow5:
             screen.blit(AL3Images[imgIndex], (alien5))
+            ALIndex = alienRow5.index(alien5)
+            if alienClockArray[ALIndex] >= alienBulletTimer[ALIndex]:
+                #print "ClockArray: " + str(alienClockArray[ALIndex])
+                #print "AlienBulletTimer: " + str(alienBulletTimer[ALIndex])
+                pygame.time.delay(10)
+                alienBulPosx = alienRow5[ALIndex].centerx
+                alienBulPosy = alienRow5[ALIndex].centery + 25
+                alienBulRect = pygame.Rect(alienBulPosx, alienBulPosy, 5, 10)
+                alienBulletArray.append(alienBulRect)
+                if ALIndex == 0:
+                    alienBulletTickCount = 0
+                elif ALIndex == 1:
+                    alienBulletTickCount2 = 0
+                elif ALIndex == 2:
+                    alienBulletTickCount3 = 0
+                elif ALIndex == 3:
+                    alienBulletTickCount4 = 0
+                elif ALIndex == 4:
+                    alienBulletTickCount5 = 0
+                elif ALIndex == 5:
+                    alienBulletTickCount6 = 0
+                elif ALIndex == 6:
+                    alienBulletTickCount7 = 0
+                elif ALIndex == 7:
+                    alienBulletTickCount8 = 0
+                elif ALIndex == 8:
+                    alienBulletTickCount9 = 0
+                elif ALIndex == 9:
+                    alienBulletTickCount10 = 0
+                elif ALIndex == 10:
+                    alienBulletTickCount11 = 0
+                elif ALIndex == 11:
+                    alienBulletTickCount12 = 0
+                #print alienClockArray[ALIndex]
+                #print "Save me!!!"
             for bullet in bulletCollection:
                 if bullet.colliderect(alien5):
-                    invader_killed()
                     score += 20
+                    invaderKilled()
                     bulletCollection.remove(bullet)
                     alienRow5.remove(alien5)
             if move_tick_count5 >= moveSpeed:
@@ -491,6 +398,875 @@ def game():
             if alien5.bottom >= 650:
                 loser()
 
+       
+        for alien4 in alienRow4:
+            screen.blit(AL3Images[imgIndex], (alien4))
+            ALIndex = alienRow4.index(alien4)
+            alx = alienRow4[ALIndex].x
+            aly = alienRow4[ALIndex].y + 50
+            if alienClockArray[ALIndex] >= alienBulletTimer[ALIndex]:
+                try:
+                    if alienRow5[ALIndex].collidepoint(alx, aly) == False:
+                        alienBulPosx = alien4.centerx
+                        alienBulPosy = alien4.centery + 15
+                        alienBulRect = pygame.Rect(alienBulPosx, alienBulPosy, 5, 10)
+                        alienBulletArray.append(alienBulRect)
+                        if ALIndex == 0:
+                            alienBulletTickCount = 0
+                        elif ALIndex == 1:
+                            alienBulletTickCount2 = 0
+                        elif ALIndex == 2:
+                            alienBulletTickCount3 = 0
+                        elif ALIndex == 3:
+                            alienBulletTickCount4 = 0
+                        elif ALIndex == 4:
+                            alienBulletTickCount5 = 0
+                        elif ALIndex == 5:
+                            alienBulletTickCount6 = 0
+                        elif ALIndex == 6:
+                            alienBulletTickCount7 = 0
+                        elif ALIndex == 7:
+                            alienBulletTickCount8 = 0
+                        elif ALIndex == 8:
+                            alienBulletTickCount9 = 0
+                        elif ALIndex == 9:
+                            alienBulletTickCount10 = 0
+                        elif ALIndex == 10:
+                            alienBulletTickCount11 = 0
+                        elif ALIndex == 11:
+                            alienBulletTickCount12 = 0
+                    elif alienRow5[ALIndex].collidepoint(alx, aly):
+                        #print "Don't Shoot row 5"
+                        if ALIndex == 0:
+                            alienBulletTickCount = 0
+                        elif ALIndex == 1:
+                            alienBulletTickCount2 = 0
+                        elif ALIndex == 2:
+                            alienBulletTickCount3 = 0
+                        elif ALIndex == 3:
+                            alienBulletTickCount4 = 0
+                        elif ALIndex == 4:
+                            alienBulletTickCount5 = 0
+                        elif ALIndex == 5:
+                            alienBulletTickCount6 = 0
+                        elif ALIndex == 6:
+                            alienBulletTickCount7 = 0
+                        elif ALIndex == 7:
+                            alienBulletTickCount8 = 0
+                        elif ALIndex == 8:
+                            alienBulletTickCount9 = 0
+                        elif ALIndex == 9:
+                            alienBulletTickCount10 = 0
+                        elif ALIndex == 10:
+                            alienBulletTickCount11 = 0
+                        elif ALIndex == 11:
+                            alienBulletTickCount12 = 0
+                except IndexError:
+                    #print "Excepted"
+                    if ALIndex == 0:
+                        alienBulletTickCount = 0
+                    elif ALIndex == 1:
+                        alienBulletTickCount2 = 0
+                    elif ALIndex == 2:
+                        alienBulletTickCount3 = 0
+                    elif ALIndex == 3:
+                        alienBulletTickCount4 = 0
+                    elif ALIndex == 4:
+                        alienBulletTickCount5 = 0
+                    elif ALIndex == 5:
+                        alienBulletTickCount6 = 0
+                    elif ALIndex == 6:
+                        alienBulletTickCount7 = 0
+                    elif ALIndex == 7:
+                        alienBulletTickCount8 = 0
+                    elif ALIndex == 8:
+                        alienBulletTickCount9 = 0
+                    elif ALIndex == 9:
+                        alienBulletTickCount10 = 0
+                    elif ALIndex == 10:
+                        alienBulletTickCount11 = 0
+                    elif ALIndex == 11:
+                        alienBulletTickCount12 = 0
+            for bullet in bulletCollection:
+                if bullet.colliderect(alien4):
+                    score += 20
+                    invaderKilled()
+                    bulletCollection.remove(bullet)
+                    alienRow4.remove(alien4)
+            if move_tick_count4 >= moveSpeed:
+                move_tick_count4 = 0
+                if imgIndex == 0:
+                    imgIndex += 1
+                elif imgIndex == 1:
+                    imgIndex = 0
+                for alien4 in alienRow4:
+                    alien4.left += dax
+            if (alien4.left < 30 and right == False):
+                right = True
+                dax = -dax
+                for alien5 in alienRow5:
+                    alien5.bottom += 10
+                for alien4 in alienRow4:
+                    alien4.bottom += 10
+                for alien3 in alienRow3:
+                    alien3.bottom += 10
+                for alien2 in alienRow2:
+                    alien2.bottom += 10
+                for alien1 in alienRow1:
+                    alien1.bottom += 10
+                if moveSpeed > 100:
+                    moveSpeed -= moveSubt
+            elif (alien4.right > 970 and right == True):
+                right = False
+                dax = -dax
+                for alien5 in alienRow5:
+                    alien5.bottom += 10
+                for alien4 in alienRow4:
+                    alien4.bottom += 10
+                    alien4.left += 2*dax
+                for alien3 in alienRow3:
+                    alien3.bottom += 10
+                for alien2 in alienRow2:
+                    alien2.bottom += 10
+                for alien1 in alienRow1:
+                    alien1.bottom += 10
+            if alien4.bottom >= 650:
+                loser()                
+                    					
+				
+        for alien3 in alienRow3:
+            screen.blit(AL2Images[imgIndex], (alien3))
+            ALIndex = alienRow3.index(alien3)
+            alx = alienRow3[ALIndex].x
+            aly = alienRow3[ALIndex].y + 50
+            if alienClockArray[ALIndex] >= alienBulletTimer[ALIndex]:
+                try:
+                    if alienRow4[ALIndex].collidepoint(alx, aly) == False:
+                        aly += 50
+                        #print ALIndex
+                        try:
+                            if alienRow5[ALIndex].collidepoint(alx, aly) == False:
+                                alienBulPosx = alienRow3[ALIndex].centerx
+                                alienBulPosy = alienRow3[ALIndex].centery + 15
+                                alienBulRect = pygame.Rect(alienBulPosx, alienBulPosy, 5, 10)
+                                alienBulletArray.append(alienBulRect)
+                                if ALIndex == 0:
+                                    alienBulletTickCount = 0
+                                elif ALIndex == 1:
+                                    alienBulletTickCount2 = 0
+                                elif ALIndex == 2:
+                                    alienBulletTickCount3 = 0
+                                elif ALIndex == 3:
+                                    alienBulletTickCount4 = 0
+                                elif ALIndex == 4:
+                                    alienBulletTickCount5 = 0
+                                elif ALIndex == 5:
+                                    alienBulletTickCount6 = 0
+                                elif ALIndex == 6:
+                                    alienBulletTickCount7 = 0
+                                elif ALIndex == 7:
+                                    alienBulletTickCount8 = 0
+                                elif ALIndex == 8:
+                                    alienBulletTickCount9 = 0
+                                elif ALIndex == 9:
+                                    alienBulletTickCount10 = 0
+                                elif ALIndex == 10:
+                                    alienBulletTickCount11 = 0
+                                elif ALIndex == 11:
+                                    alienBulletTickCount12 = 0 
+                            elif alienRow5[ALIndex].collidepoint(alx, aly):
+                                #print "Don't Shoot row 5"
+                                if ALIndex == 0:
+                                    alienBulletTickCount = 0
+                                elif ALIndex == 1:
+                                    alienBulletTickCount2 = 0
+                                elif ALIndex == 2:
+                                    alienBulletTickCount3 = 0
+                                elif ALIndex == 3:
+                                    alienBulletTickCount4 = 0
+                                elif ALIndex == 4:
+                                    alienBulletTickCount5 = 0
+                                elif ALIndex == 5:
+                                    alienBulletTickCount6 = 0
+                                elif ALIndex == 6:
+                                    alienBulletTickCount7 = 0
+                                elif ALIndex == 7:
+                                    alienBulletTickCount8 = 0
+                                elif ALIndex == 8:
+                                    alienBulletTickCount9 = 0
+                                elif ALIndex == 9:
+                                    alienBulletTickCount10 = 0
+                                elif ALIndex == 10:
+                                    alienBulletTickCount11 = 0
+                                elif ALIndex == 11:
+                                    alienBulletTickCount12 = 0
+                        except IndexError:
+                            if ALIndex == 0:
+                                alienBulletTickCount = 0
+                            elif ALIndex == 1:
+                                alienBulletTickCount2 = 0
+                            elif ALIndex == 2:
+                                alienBulletTickCount3 = 0
+                            elif ALIndex == 3:
+                                alienBulletTickCount4 = 0
+                            elif ALIndex == 4:
+                                alienBulletTickCount5 = 0
+                            elif ALIndex == 5:
+                                alienBulletTickCount6 = 0
+                            elif ALIndex == 6:
+                                alienBulletTickCount7 = 0
+                            elif ALIndex == 7:
+                                alienBulletTickCount8 = 0
+                            elif ALIndex == 8:
+                                alienBulletTickCount9 = 0
+                            elif ALIndex == 9:
+                                alienBulletTickCount10 = 0
+                            elif ALIndex == 10:
+                                alienBulletTickCount11 = 0
+                            elif ALIndex == 11:
+                                alienBulletTickCount12 = 0
+                    elif alienRow4[ALIndex].collidepoint(alx, aly):
+                        #print "Don't Shoot row 4"
+                        if ALIndex == 0:
+                            alienBulletTickCount = 0
+                        elif ALIndex == 1:
+                            alienBulletTickCount2 = 0
+                        elif ALIndex == 2:
+                            alienBulletTickCount3 = 0
+                        elif ALIndex == 3:
+                            alienBulletTickCount4 = 0
+                        elif ALIndex == 4:
+                            alienBulletTickCount5 = 0
+                        elif ALIndex == 5:
+                            alienBulletTickCount6 = 0
+                        elif ALIndex == 6:
+                            alienBulletTickCount7 = 0
+                        elif ALIndex == 7:
+                            alienBulletTickCount8 = 0
+                        elif ALIndex == 8:
+                            alienBulletTickCount9 = 0
+                        elif ALIndex == 9:
+                            alienBulletTickCount10 = 0
+                        elif ALIndex == 10:
+                            alienBulletTickCount11 = 0
+                        elif ALIndex == 11:
+                            alienBulletTickCount12 = 0
+                except IndexError:
+                    if ALIndex == 0:
+                        alienBulletTickCount = 0
+                    elif ALIndex == 1:
+                        alienBulletTickCount2 = 0
+                    elif ALIndex == 2:
+                        alienBulletTickCount3 = 0
+                    elif ALIndex == 3:
+                        alienBulletTickCount4 = 0
+                    elif ALIndex == 4:
+                        alienBulletTickCount5 = 0
+                    elif ALIndex == 5:
+                        alienBulletTickCount6 = 0
+                    elif ALIndex == 6:
+                        alienBulletTickCount7 = 0
+                    elif ALIndex == 7:
+                        alienBulletTickCount8 = 0
+                    elif ALIndex == 8:
+                        alienBulletTickCount9 = 0
+                    elif ALIndex == 9:
+                        alienBulletTickCount10 = 0
+                    elif ALIndex == 10:
+                        alienBulletTickCount11 = 0
+                    elif ALIndex == 11:
+                        alienBulletTickCount12 = 0
+                        
+            for bullet in bulletCollection:
+                if bullet.colliderect(alien3):
+                    score += 40
+                    invaderKilled()
+                    bulletCollection.remove(bullet)
+                    alienRow3.remove(alien3)
+            if move_tick_count3 >= moveSpeed:
+                move_tick_count3 = 0
+                if imgIndex == 0:
+                    imgIndex += 1
+                elif imgIndex == 1:
+                    imgIndex = 0
+                for alien3 in alienRow3:
+                    alien3.left += dax
+            if (alien3.left < 30 and right == False):
+                right = True
+                dax = -dax
+                for alien5 in alienRow5:
+                    alien5.bottom += 10
+                for alien4 in alienRow4:
+                    alien4.bottom += 10
+                for alien3 in alienRow3:
+                    alien3.bottom += 10
+                for alien2 in alienRow2:
+                    alien2.bottom += 10
+                for alien1 in alienRow1:
+                    alien1.bottom += 10
+                if moveSpeed > 100:    
+                    moveSpeed -= moveSubt
+            elif (alien3.right > 970 and right == True):
+                right = False
+                dax = -dax
+                for alien5 in alienRow5:
+                    alien5.bottom += 10
+                for alien4 in alienRow4:
+                    alien4.bottom += 10
+                for alien3 in alienRow3:
+                    alien3.bottom += 10
+                    alien3.left += 2*dax
+                for alien2 in alienRow2:
+                    alien2.bottom += 10
+                for alien1 in alienRow1:
+                    alien1.bottom += 10
+            if alien3.bottom >= 650:
+                loser()
+                  
+
+        for alien2 in alienRow2:#Do the same thing for each row. This is because if a row 
+            screen.blit(AL2Images[imgIndex], (alien2))
+            ALIndex = alienRow2.index(alien2)
+            alx = alienRow2[ALIndex].x
+            aly = alienRow2[ALIndex].y + 50
+            if alienClockArray[ALIndex] >= alienBulletTimer[ALIndex]:
+                try:
+                    if alienRow3[ALIndex].collidepoint(alx, aly) == False:
+                        aly += 50
+                        try:
+                            if alienRow4[ALIndex].collidepoint(alx, aly) == False:
+                                aly += 50
+                                #print ALIndex
+                                try:
+                                    if alienRow5[ALIndex].collidepoint(alx, aly) == False:
+                                        alienBulPosx = alienRow2[ALIndex].centerx
+                                        alienBulPosy = alienRow2[ALIndex].centery + 15
+                                        alienBulRect = pygame.Rect(alienBulPosx, alienBulPosy, 5, 10)
+                                        alienBulletArray.append(alienBulRect)
+                                        if ALIndex == 0:
+                                            alienBulletTickCount = 0
+                                        elif ALIndex == 1:
+                                            alienBulletTickCount2 = 0
+                                        elif ALIndex == 2:
+                                            alienBulletTickCount3 = 0
+                                        elif ALIndex == 3:
+                                            alienBulletTickCount4 = 0
+                                        elif ALIndex == 4:
+                                            alienBulletTickCount5 = 0
+                                        elif ALIndex == 5:
+                                            alienBulletTickCount6 = 0
+                                        elif ALIndex == 6:
+                                            alienBulletTickCount7 = 0
+                                        elif ALIndex == 7:
+                                            alienBulletTickCount8 = 0
+                                        elif ALIndex == 8:
+                                            alienBulletTickCount9 = 0
+                                        elif ALIndex == 9:
+                                            alienBulletTickCount10 = 0
+                                        elif ALIndex == 10:
+                                            alienBulletTickCount11 = 0
+                                        elif ALIndex == 11:
+                                            alienBulletTickCount12 = 0
+                                    elif alienRow5[ALIndex].collidepoint(alx, aly):
+                                        #print "Don't Shoot row 5"
+                                        if ALIndex == 0:
+                                            alienBulletTickCount = 0
+                                        elif ALIndex == 1:
+                                            alienBulletTickCount2 = 0
+                                        elif ALIndex == 2:
+                                            alienBulletTickCount3 = 0
+                                        elif ALIndex == 3:
+                                            alienBulletTickCount4 = 0
+                                        elif ALIndex == 4:
+                                            alienBulletTickCount5 = 0
+                                        elif ALIndex == 5:
+                                            alienBulletTickCount6 = 0
+                                        elif ALIndex == 6:
+                                            alienBulletTickCount7 = 0
+                                        elif ALIndex == 7:
+                                            alienBulletTickCount8 = 0
+                                        elif ALIndex == 8:
+                                            alienBulletTickCount9 = 0
+                                        elif ALIndex == 9:
+                                            alienBulletTickCount10 = 0
+                                        elif ALIndex == 10:
+                                            alienBulletTickCount11 = 0
+                                        elif ALIndex == 11:
+                                            alienBulletTickCount12 = 0
+                                except IndexError:
+                                    if ALIndex == 0:
+                                        alienBulletTickCount = 0
+                                    elif ALIndex == 1:
+                                        alienBulletTickCount2 = 0
+                                    elif ALIndex == 2:
+                                        alienBulletTickCount3 = 0
+                                    elif ALIndex == 3:
+                                        alienBulletTickCount4 = 0
+                                    elif ALIndex == 4:
+                                        alienBulletTickCount5 = 0
+                                    elif ALIndex == 5:
+                                        alienBulletTickCount6 = 0
+                                    elif ALIndex == 6:
+                                        alienBulletTickCount7 = 0
+                                    elif ALIndex == 7:
+                                        alienBulletTickCount8 = 0
+                                    elif ALIndex == 8:
+                                        alienBulletTickCount9 = 0
+                                    elif ALIndex == 9:
+                                        alienBulletTickCount10 = 0
+                                    elif ALIndex == 10:
+                                        alienBulletTickCount11 = 0
+                                    elif ALIndex == 11:
+                                        alienBulletTickCount12 = 0
+                            elif alienRow4[ALIndex].collidepoint(alx, aly):
+                                #print "Don't Shoot row 4"
+                                if ALIndex == 0:
+                                    alienBulletTickCount = 0
+                                elif ALIndex == 1:
+                                    alienBulletTickCount2 = 0
+                                elif ALIndex == 2:
+                                    alienBulletTickCount3 = 0
+                                elif ALIndex == 3:
+                                    alienBulletTickCount4 = 0
+                                elif ALIndex == 4:
+                                    alienBulletTickCount5 = 0
+                                elif ALIndex == 5:
+                                    alienBulletTickCount6 = 0
+                                elif ALIndex == 6:
+                                    alienBulletTickCount7 = 0
+                                elif ALIndex == 7:
+                                    alienBulletTickCount8 = 0
+                                elif ALIndex == 8:
+                                    alienBulletTickCount9 = 0
+                                elif ALIndex == 9:
+                                    alienBulletTickCount10 = 0
+                                elif ALIndex == 10:
+                                    alienBulletTickCount11 = 0
+                                elif ALIndex == 11:
+                                    alienBulletTickCount12 = 0
+                        except IndexError:
+                            if ALIndex == 0:
+                                alienBulletTickCount = 0
+                            elif ALIndex == 1:
+                                alienBulletTickCount2 = 0
+                            elif ALIndex == 2:
+                                alienBulletTickCount3 = 0
+                            elif ALIndex == 3:
+                                alienBulletTickCount4 = 0
+                            elif ALIndex == 4:
+                                alienBulletTickCount5 = 0
+                            elif ALIndex == 5:
+                                alienBulletTickCount6 = 0
+                            elif ALIndex == 6:
+                                alienBulletTickCount7 = 0
+                            elif ALIndex == 7:
+                                alienBulletTickCount8 = 0
+                            elif ALIndex == 8:
+                                alienBulletTickCount9 = 0
+                            elif ALIndex == 9:
+                                alienBulletTickCount10 = 0
+                            elif ALIndex == 10:
+                                alienBulletTickCount11 = 0
+                            elif ALIndex == 11:
+                                alienBulletTickCount12 = 0
+                    elif alienRow3[ALIndex].collidepoint(alx, aly):
+                        #print "Don't Shoot row 3, code 2"
+                        if ALIndex == 0:
+                            alienBulletTickCount = 0
+                        elif ALIndex == 1:
+                            alienBulletTickCount2 = 0
+                        elif ALIndex == 2:
+                            alienBulletTickCount3 = 0
+                        elif ALIndex == 3:
+                            alienBulletTickCount4 = 0
+                        elif ALIndex == 4:
+                            alienBulletTickCount5 = 0
+                        elif ALIndex == 5:
+                            alienBulletTickCount6 = 0
+                        elif ALIndex == 6:
+                            alienBulletTickCount7 = 0
+                        elif ALIndex == 7:
+                            alienBulletTickCount8 = 0
+                        elif ALIndex == 8:
+                            alienBulletTickCount9 = 0
+                        elif ALIndex == 9:
+                            alienBulletTickCount10 = 0
+                        elif ALIndex == 10:
+                            alienBulletTickCount11 = 0
+                        elif ALIndex == 11:
+                            alienBulletTickCount12 = 0
+                except IndexError:
+                    if ALIndex == 0:
+                        alienBulletTickCount = 0
+                    elif ALIndex == 1:
+                        alienBulletTickCount2 = 0
+                    elif ALIndex == 2:
+                        alienBulletTickCount3 = 0
+                    elif ALIndex == 3:
+                        alienBulletTickCount4 = 0
+                    elif ALIndex == 4:
+                        alienBulletTickCount5 = 0
+                    elif ALIndex == 5:
+                        alienBulletTickCount6 = 0
+                    elif ALIndex == 6:
+                        alienBulletTickCount7 = 0
+                    elif ALIndex == 7:
+                        alienBulletTickCount8 = 0
+                    elif ALIndex == 8:
+                        alienBulletTickCount9 = 0
+                    elif ALIndex == 9:
+                        alienBulletTickCount10 = 0
+                    elif ALIndex == 10:
+                        alienBulletTickCount11 = 0
+                    elif ALIndex == 11:
+                        alienBulletTickCount12 = 0
+            for bullet in bulletCollection:
+                if bullet.colliderect(alien2):
+                    score += 40
+                    invaderKilled()
+                    bulletCollection.remove(bullet)
+                    alienRow2.remove(alien2)	
+            if move_tick_count2 >= moveSpeed:
+                move_tick_count2 = 0
+                if imgIndex == 0:
+                    imgIndex += 1
+                elif imgIndex == 1:
+                    imgIndex = 0
+                for alien2 in alienRow2:
+                    alien2.left += dax
+            if (alien2.left < 30 and right == False):
+                right = True
+                dax = -dax
+                for alien5 in alienRow5:
+                    alien5.bottom += 10
+                for alien4 in alienRow4:
+                    alien4.bottom += 10
+                for alien3 in alienRow3:
+                    alien3.bottom += 10
+                for alien2 in alienRow2:
+                    alien2.bottom += 10
+                for alien1 in alienRow1:
+                    alien1.bottom += 10
+                if moveSpeed > 100:
+                    moveSpeed -= moveSubt
+            elif (alien2.right > 970 and right == True):
+                right = False
+                dax = -dax
+                for alien5 in alienRow5:
+                    alien5.bottom += 10
+                for alien4 in alienRow4:
+                    alien4.bottom += 10
+                for alien3 in alienRow3:
+                    alien3.bottom += 10
+                for alien2 in alienRow2:
+                    alien2.bottom += 10
+                    alien2.left += 2*dax
+                for alien1 in alienRow1:
+                    alien1.bottom += 10
+                    alien1.left += 2*dax
+            if alien2.bottom >= 650:
+                loser()
+       
+
+        for alien1 in alienRow1:
+            screen.blit(AL1Images[imgIndex], (alien1))#blit the alien based on an array containing images
+            ALIndex = alienRow1.index(alien1)
+            alx = alienRow1[ALIndex].x
+            aly = alienRow1[ALIndex].y + 50
+            if alienClockArray[ALIndex] >= alienBulletTimer[ALIndex]:
+                try:
+                    if alienRow2[ALIndex].collidepoint(alx, aly) == False:
+                        #print "Shoot alien 2"
+                        #print alienRow2[ALIndex]
+                        aly += 50
+                        try:
+                            if alienRow3[ALIndex].collidepoint(alx, aly) == False:
+                                aly += 50
+                                try:
+                                    if alienRow4[ALIndex].collidepoint(alx, aly) == False:
+                                        aly += 50
+                                        #print ALIndex
+                                        try:
+                                            if alienRow5[ALIndex].collidepoint(alx, aly) == False:
+                                                alienBulPosx = alienRow1[ALIndex].centerx
+                                                alienBulPosy = alienRow1[ALIndex].centery + 15
+                                                alienBulRect = pygame.Rect(alienBulPosx, alienBulPosy, 5, 10)
+                                                alienBulletArray.append(alienBulRect)
+                                                if ALIndex == 0:
+                                                    alienBulletTickCount = 0
+                                                elif ALIndex == 1:
+                                                    alienBulletTickCount2 = 0
+                                                elif ALIndex == 2:
+                                                    alienBulletTickCount3 = 0
+                                                elif ALIndex == 3:
+                                                    alienBulletTickCount4 = 0
+                                                elif ALIndex == 4:
+                                                    alienBulletTickCount5 = 0
+                                                elif ALIndex == 5:
+                                                    alienBulletTickCount6 = 0
+                                                elif ALIndex == 6:
+                                                    alienBulletTickCount7 = 0
+                                                elif ALIndex == 7:
+                                                    alienBulletTickCount8 = 0
+                                                elif ALIndex == 8:
+                                                    alienBulletTickCount9 = 0
+                                                elif ALIndex == 9:
+                                                    alienBulletTickCount10 = 0
+                                                elif ALIndex == 10:
+                                                    alienBulletTickCount11 = 0
+                                                elif ALIndex == 11:
+                                                    alienBulletTickCount12 = 0
+                                            elif alienRow5[ALIndex].collidepoint(alx, aly):
+                                                #print "Don't Shoot row 5"
+                                                if ALIndex == 0:
+                                                    alienBulletTickCount = 0
+                                                elif ALIndex == 1:
+                                                    alienBulletTickCount2 = 0
+                                                elif ALIndex == 2:
+                                                    alienBulletTickCount3 = 0
+                                                elif ALIndex == 3:
+                                                    alienBulletTickCount4 = 0
+                                                elif ALIndex == 4:
+                                                    alienBulletTickCount5 = 0
+                                                elif ALIndex == 5:
+                                                    alienBulletTickCount6 = 0
+                                                elif ALIndex == 6:
+                                                    alienBulletTickCount7 = 0
+                                                elif ALIndex == 7:
+                                                    alienBulletTickCount8 = 0
+                                                elif ALIndex == 8:
+                                                    alienBulletTickCount9 = 0
+                                                elif ALIndex == 9:
+                                                    alienBulletTickCount10 = 0
+                                                elif ALIndex == 10:
+                                                    alienBulletTickCount11 = 0
+                                                elif ALIndex == 11:
+                                                    alienBulletTickCount12 = 0
+                                        except IndexError:
+                                            if ALIndex == 0:
+                                                alienBulletTickCount = 0
+                                            elif ALIndex == 1:
+                                                alienBulletTickCount2 = 0
+                                            elif ALIndex == 2:
+                                                alienBulletTickCount3 = 0
+                                            elif ALIndex == 3:
+                                                alienBulletTickCount4 = 0
+                                            elif ALIndex == 4:
+                                                alienBulletTickCount5 = 0
+                                            elif ALIndex == 5:
+                                                alienBulletTickCount6 = 0
+                                            elif ALIndex == 6:
+                                                alienBulletTickCount7 = 0
+                                            elif ALIndex == 7:
+                                                alienBulletTickCount8 = 0
+                                            elif ALIndex == 8:
+                                                alienBulletTickCount9 = 0
+                                            elif ALIndex == 9:
+                                                alienBulletTickCount10 = 0
+                                            elif ALIndex == 10:
+                                                alienBulletTickCount11 = 0
+                                            elif ALIndex == 11:
+                                                alienBulletTickCount12 = 0
+                                    elif alienRow4[ALIndex].collidepoint(alx, aly):
+                                        #print "Don't Shoot row 4"
+                                        if ALIndex == 0:
+                                            alienBulletTickCount = 0
+                                        elif ALIndex == 1:
+                                            alienBulletTickCount2 = 0
+                                        elif ALIndex == 2:
+                                            alienBulletTickCount3 = 0
+                                        elif ALIndex == 3:
+                                            alienBulletTickCount4 = 0
+                                        elif ALIndex == 4:
+                                            alienBulletTickCount5 = 0
+                                        elif ALIndex == 5:
+                                            alienBulletTickCount6 = 0
+                                        elif ALIndex == 6:
+                                            alienBulletTickCount7 = 0
+                                        elif ALIndex == 7:
+                                            alienBulletTickCount8 = 0
+                                        elif ALIndex == 8:
+                                            alienBulletTickCount9 = 0
+                                        elif ALIndex == 9:
+                                            alienBulletTickCount10 = 0
+                                        elif ALIndex == 10:
+                                            alienBulletTickCount11 = 0
+                                        elif ALIndex == 11:
+                                            alienBulletTickCount12 = 0
+                                except IndexError:
+                                    if ALIndex == 0:
+                                        alienBulletTickCount = 0
+                                    elif ALIndex == 1:
+                                        alienBulletTickCount2 = 0
+                                    elif ALIndex == 2:
+                                        alienBulletTickCount3 = 0
+                                    elif ALIndex == 3:
+                                        alienBulletTickCount4 = 0
+                                    elif ALIndex == 4:
+                                        alienBulletTickCount5 = 0
+                                    elif ALIndex == 5:
+                                        alienBulletTickCount6 = 0
+                                    elif ALIndex == 6:
+                                        alienBulletTickCount7 = 0
+                                    elif ALIndex == 7:
+                                        alienBulletTickCount8 = 0
+                                    elif ALIndex == 8:
+                                        alienBulletTickCount9 = 0
+                                    elif ALIndex == 9:
+                                        alienBulletTickCount10 = 0
+                                    elif ALIndex == 10:
+                                        alienBulletTickCount11 = 0
+                                    elif ALIndex == 11:
+                                        alienBulletTickCount12 = 0
+                            elif alienRow3[ALIndex].collidepoint(alx, aly):
+                                #print "Don't Shoot row 3"
+                                if ALIndex == 0:
+                                    alienBulletTickCount = 0
+                                elif ALIndex == 1:
+                                    alienBulletTickCount2 = 0
+                                elif ALIndex == 2:
+                                    alienBulletTickCount3 = 0
+                                elif ALIndex == 3:
+                                    alienBulletTickCount4 = 0
+                                elif ALIndex == 4:
+                                    alienBulletTickCount5 = 0
+                                elif ALIndex == 5:
+                                    alienBulletTickCount6 = 0
+                                elif ALIndex == 6:
+                                    alienBulletTickCount7 = 0
+                                elif ALIndex == 7:
+                                    alienBulletTickCount8 = 0
+                                elif ALIndex == 8:
+                                    alienBulletTickCount9 = 0
+                                elif ALIndex == 9:
+                                    alienBulletTickCount10 = 0
+                                elif ALIndex == 10:
+                                    alienBulletTickCount11 = 0
+                                elif ALIndex == 11:
+                                    alienBulletTickCount12 = 0
+                        except IndexError:
+                            if ALIndex == 0:
+                                alienBulletTickCount = 0
+                            elif ALIndex == 1:
+                                alienBulletTickCount2 = 0
+                            elif ALIndex == 2:
+                                alienBulletTickCount3 = 0
+                            elif ALIndex == 3:
+                                alienBulletTickCount4 = 0
+                            elif ALIndex == 4:
+                                alienBulletTickCount5 = 0
+                            elif ALIndex == 5:
+                                alienBulletTickCount6 = 0
+                            elif ALIndex == 6:
+                                alienBulletTickCount7 = 0
+                            elif ALIndex == 7:
+                                alienBulletTickCount8 = 0
+                            elif ALIndex == 8:
+                                alienBulletTickCount9 = 0
+                            elif ALIndex == 9:
+                                alienBulletTickCount10 = 0
+                            elif ALIndex == 10:
+                                alienBulletTickCount11 = 0
+                            elif ALIndex == 11:
+                                alienBulletTickCount12 = 0
+                    elif alienRow2[ALIndex].collidepoint(alx, aly):
+                        #print "Don't Shoot, row 2"
+                        if ALIndex == 0:
+                            alienBulletTickCount = 0
+                        elif ALIndex == 1:
+                            alienBulletTickCount2 = 0
+                        elif ALIndex == 2:
+                            alienBulletTickCount3 = 0
+                        elif ALIndex == 3:
+                            alienBulletTickCount4 = 0
+                        elif ALIndex == 4:
+                            alienBulletTickCount5 = 0
+                        elif ALIndex == 5:
+                            alienBulletTickCount6 = 0
+                        elif ALIndex == 6:
+                            alienBulletTickCount7 = 0
+                        elif ALIndex == 7:
+                            alienBulletTickCount8 = 0
+                        elif ALIndex == 8:
+                            alienBulletTickCount9 = 0
+                        elif ALIndex == 9:
+                            alienBulletTickCount10 = 0
+                        elif ALIndex == 10:
+                            alienBulletTickCount11 = 0
+                        elif ALIndex == 11:
+                            alienBulletTickCount12 = 0
+                except IndexError:
+                    if ALIndex == 0:
+                        alienBulletTickCount = 0
+                    elif ALIndex == 1:
+                        alienBulletTickCount2 = 0
+                    elif ALIndex == 2:
+                        alienBulletTickCount3 = 0
+                    elif ALIndex == 3:
+                        alienBulletTickCount4 = 0
+                    elif ALIndex == 4:
+                        alienBulletTickCount5 = 0
+                    elif ALIndex == 5:
+                        alienBulletTickCount6 = 0
+                    elif ALIndex == 6:
+                        alienBulletTickCount7 = 0
+                    elif ALIndex == 7:
+                        alienBulletTickCount8 = 0
+                    elif ALIndex == 8:
+                        alienBulletTickCount9 = 0
+                    elif ALIndex == 9:
+                        alienBulletTickCount10 = 0
+                    elif ALIndex == 10:
+                        alienBulletTickCount11 = 0
+                    elif ALIndex == 11:
+                        alienBulletTickCount12 = 0
+            for bullet in bulletCollection:
+                if bullet.colliderect(alien1):
+                    score += 100
+                    invaderKilled()
+                    bulletCollection.remove(bullet)
+                    alienRow1.remove(alien1)		
+            if move_tick_count >= moveSpeed:#once the move timer is reached
+                move_tick_count = 0
+                if imgIndex == 0:
+                    imgIndex += 1#change the index to change which image is displayed
+                elif imgIndex == 1:
+                    imgIndex = 0#reset the index to 0 once it hits its maximum
+                for alien1 in alienRow1:#and move the alien to left or right(depending which wall is hit)
+                    alien1.left += dax
+            if (alien1.left < 30 and right == False):#if the alien hits the left wall
+                dax = -dax #reverse the direction of the alien so it doesn't go off screen
+                for alien5 in alienRow5:
+                    alien5.bottom += 10 #move all aliens down 10 pixels
+                for alien4 in alienRow4:
+                    alien4.bottom += 10  
+                for alien3 in alienRow3:
+                    alien3.bottom += 10
+                for alien2 in alienRow2:
+                    alien2.bottom += 10
+                for alien1 in alienRow1:
+                    alien1.bottom += 10
+                right = True
+                if moveSpeed > 100: #If the max speed of the aliens isn't reached
+                    moveSpeed -= moveSubt #speed the aliens up after hitting the left wall
+            if (alien1.right > 970 and right == True):
+                dax = -dax
+                for alien5 in alienRow5:
+                    alien5.bottom += 10
+                for alien4 in alienRow4:
+                    alien4.bottom += 10
+                for alien3 in alienRow3:
+                    alien3.bottom += 10
+                for alien2 in alienRow2:
+                    alien2.bottom += 10
+                for alien1 in alienRow1:
+                    alien1.bottom += 10
+                    alien1.left += 2*dax
+                right = False
+            if alien1.bottom >= 650:#if the aliens reach the barriers at the bottom
+                loser()#it's game over, call loser() function stating it's game over
+
+            
         screen.blit(ship, (shipRect))
         # movement for ship            
         oldx = shipRect.left
@@ -498,8 +1274,7 @@ def game():
         #if shipRect.collide point(Screen size min + 10, screen size + ship height) or shipRect.collidepoint(Screen size max - 10, screen size + ship height):
         shipRect.left = oldx
         pygame.display.update()
-
-
+        
         
 def loser(): #Writen By Dylan
     done = False
@@ -538,5 +1313,4 @@ def loser(): #Writen By Dylan
                     pygame.quit()
         
 game()
-
 pygame.quit()
