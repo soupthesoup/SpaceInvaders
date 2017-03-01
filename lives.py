@@ -1,4 +1,3 @@
-lifeCount = 3
 initialLives = [
     "LLL"
     ]
@@ -14,6 +13,5 @@ for row in initialLives:
         
 for life in initialLives:
     pygame.draw.rect(screen, White, life, 0)
-    life.left += 50
     
 
