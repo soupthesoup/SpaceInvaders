@@ -30,7 +30,7 @@ def invaderKilled():
 
 def shoot():
     shoot = pygame.mixer.Sound("shoot.wav")
-    shootSound = shoot.play()
+    shootSound = shoot.play()    
 
 def game():
     pygame.mixer.init()
@@ -59,7 +59,6 @@ def game():
     moveSpeed = 1000 #number which states the tick count of how long aliens can move
     moveSubt = 150 #number which the moveSpeed is subtracted by to move aliens faster
 
-    score = 0
     arrayCount = 0      #used for a loop to make randomized numbers
     bulletYspeed = -5   #bullet speed moving up
     alienBulletdy = 5   #alien bullet speed moving down
@@ -73,25 +72,17 @@ def game():
     alienRow3 = []
     alienRow4 = []
     alienRow5 = []
+    Lives = []
     
     bulletCollection = []
     alienBulletArray = []
     alienBulletTimer = []   #Random numbers as a timer for aliens
     alienClockArray = [0,0,0,0,0,0,0,0,0,0,0,0]
+    initialLives = [
+    "LLL"
+    ]
 
     shipRect = pygame.Rect(shipx,shipy,shipw,shiph)
-
-    right = True
-    Main = True
-    Game = False
-    Controls = False
-
-    i = 0
-    while i < 8:
-        shootTime = randint(2500, 8000)   #randint(minValue, maxValue)
-        alienBulletTimer.append(shootTime)
-        #print alienBulletTimer[i]  #testing if number randomized works
-        i += 1 
 
     barrier = [
             "WWWWWWWWWWWWWWWWWWWW",
@@ -175,14 +166,28 @@ def game():
     alienBulletTickCount11 = 0
     alienBulletClock12 = pygame.time.Clock()
     alienBulletTickCount12 = 0
-
     i = 0
     while i < 12:
         shootTime = randint(8000, 12000)   #randint(minValue, maxValue)
         alienBulletTimer.append(shootTime)
         #print alienBulletTimer[i]  #testing if number randomized works
-        i += 1 
+        i += 1
 
+
+    lx = 10
+    ly = 770
+    for row in initialLives:
+        for col in row:
+            if col == "L":
+                lifeRect = pygame.Rect(lx,ly,20,20)
+                Lives.append(lifeRect)
+            lx += 25
+    score = 0
+    right = True
+    Main = True
+    Game = False
+    Controls = False
+    
     
     while Main:
         shipBulletTickCount += shipBulletClock.tick()
@@ -196,7 +201,7 @@ def game():
                     dsx = 5
                 elif event.key == pygame.K_LEFT:
                     dsx = -5
-                elif event.key == pygame.K_UP and (shipBulletTickCount >= 350) and length <= 2:
+                elif event.key == pygame.K_UP and (shipBulletTickCount >= 250) and length <= 5:
                     shipBulletTickCount = 0
                     bulletCollection.append(bulletRect)
                     shoot()
@@ -211,10 +216,119 @@ def game():
         shipRect.left += dsx
         if shipRect.collidepoint(10,725) or shipRect.collidepoint(990,725):
             shipRect.left = oldx
-        
-        
+
+
         screen.fill(BLACK)
         pygame.time.delay(20)
+                
+        for life in Lives:
+            pygame.draw.rect(screen, WHITE, life, 0)
+            for alienBullet in alienBulletArray:
+                if alienBullet.colliderect(shipRect):
+                    alienBulletArray.remove(alienBullet)
+                    Lives.remove(life)
+        lifeLength = len(Lives)
+        length1 = len(alienRow1)
+        length2 = len(alienRow2)
+        length3 = len(alienRow3)
+        length4 = len(alienRow4)
+        length5 = len(alienRow5)
+##        print "Length1: " + str(length1)
+##        print "Length2: " + str(length2)
+##        print "Length3: " + str(length3)
+##        print "Length4: " + str(length4)
+##        print "Length5: " + str(length5)
+        if lifeLength == 0:
+            loser()
+        if length1 == 0 and length2 == 0 and length3 == 0 and length4 == 0 and length5 == 0:
+            imgIndex = 0
+            Ax = 115 #alien x position
+            Ay = 150 #alien y position for row 1
+            Ay2 = 200#row 2
+            Ay3 = 250#row 3
+            Ay4 = 300#row 4
+            Ay5 = 350#row 5
+            
+            alienPosx = 150
+
+            moveSpeed = 1000 #number which states the tick count of how long aliens can move
+            moveSubt = 150 #number which the moveSpeed is subtracted by to move aliens faster
+
+            arrayCount = 0      #used for a loop to make randomized numbers
+            bulletYspeed = -5   #bullet speed moving up
+            alienBulletdy = 5   #alien bullet speed moving down
+
+            alienRow1 = []
+            alienRow2 = []
+            alienRow3 = []
+            alienRow4 = []
+            alienRow5 = []
+            
+            alienBulletTimer = []   #Random numbers as a timer for aliens
+            alienClockArray = [0,0,0,0,0,0,0,0,0,0,0,0]
+
+            aliens = ["AAAAAAAAAAAA"]
+
+            for row in aliens:
+                for col in row:
+                    if col == "A":
+                        alien1Rect = pygame.Rect(Ax,Ay,30,30)#append a position for each alien in an array
+                        alienRow1.append(alien1Rect)
+                        alien2Rect = pygame.Rect(Ax,Ay2,30,30)
+                        alienRow2.append(alien2Rect)
+                        alien3Rect = pygame.Rect(Ax,Ay3,30,30)
+                        alienRow3.append(alien3Rect)
+                        alien4Rect = pygame.Rect(Ax,Ay4,30,30)
+                        alienRow4.append(alien4Rect)
+                        alien5Rect = pygame.Rect(Ax,Ay5,30,30)
+                        alienRow5.append(alien5Rect)
+                    Ax += 75#move the alien x pos over some so they don't overlap
+                Ax = 115#reset it to the beginning for each row of aliens so the are aligned
+
+            moveclock = pygame.time.Clock()
+            move_tick_count = 0
+            moveclock2 = pygame.time.Clock()#clocks used for how long an alien has to wait befor moving
+            move_tick_count2 = 0
+            moveclock3 = pygame.time.Clock()#each clock is for each row
+            move_tick_count3 = 0
+            moveclock4 = pygame.time.Clock()
+            move_tick_count4 = 0
+            moveclock5 = pygame.time.Clock()
+            move_tick_count5 = 0
+            shipBulletClock = pygame.time.Clock()
+            shipBulletTickCount = 0
+            
+            alienBulletClock = pygame.time.Clock()
+            alienBulletTickCount = 0
+            alienBulletClock2 = pygame.time.Clock()
+            alienBulletTickCount2 = 0
+            alienBulletClock3 = pygame.time.Clock()
+            alienBulletTickCount3 = 0
+            alienBulletClock4 = pygame.time.Clock()
+            alienBulletTickCount4 = 0
+            alienBulletClock5 = pygame.time.Clock()
+            alienBulletTickCount5 = 0
+            alienBulletClock6 = pygame.time.Clock()
+            alienBulletTickCount6 = 0
+            alienBulletClock7 = pygame.time.Clock()
+            alienBulletTickCount7 = 0
+            alienBulletClock8 = pygame.time.Clock()
+            alienBulletTickCount8 = 0
+            alienBulletClock9 = pygame.time.Clock()
+            alienBulletTickCount9 = 0
+            alienBulletClock10 = pygame.time.Clock()
+            alienBulletTickCount10 = 0
+            alienBulletClock11 = pygame.time.Clock()
+            alienBulletTickCount11 = 0
+            alienBulletClock12 = pygame.time.Clock()
+            alienBulletTickCount12 = 0
+
+            i = 0
+            while i < 12:
+                shootTime = randint(7000, 12000)   #randint(minValue, maxValue)
+                alienBulletTimer.append(shootTime)
+                #print alienBulletTimer[i]  #testing if number randomized works
+                i += 1 
         
         for wallR1 in barrier1:
             pygame.draw.rect(screen,GREEN,wallR1,0)#draw all the barriers using the rect in each barrier array
@@ -263,6 +377,7 @@ def game():
         screen.blit(scoreText, (50, 50))
 
         #print alienBulletTickCount
+        
         for bullet in bulletCollection:#Writen by Dylan
             if bullet.top > 0: #if bullet is not at the top of the screen
                 pygame.draw.rect(screen, WHITE, bullet, 0)
@@ -1314,3 +1429,4 @@ def loser(): #Writen By Dylan
         
 game()
 pygame.quit()
+
