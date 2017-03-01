@@ -9,9 +9,13 @@ for row in initialLives:
         lx += 25
     for alienBullet in alienBulletArray:
         if alienBullet.colliderect(shipRect):
-            initialLives.
+            initialLives.remove
         
 for life in initialLives:
     pygame.draw.rect(screen, White, life, 0)
+        for alienBullet in alienBulletArray:
+        if alienBullet.colliderect(shipRect):
+            alienBullet.remove(alienBullet)
+            initialLives.remove(life)
     
 
